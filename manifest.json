@@ -20,13 +20,12 @@
 	"background" : {
 		"page" : "background.html"
 	},
-	"content_scripts": [
+	/*"content_scripts": [
 	{
 	  "matches": ["http://localhost:37459/*", "http://linkslap.me/*" ],
 	  "js": ["/scripts/vendor/jquery-2.0.3.min.js","/scripts/content.js"],
 	  "run_at" : "document_start"
-	}
-	],
+	}],*/
 	"permissions": [
 		"http://*/*",
 		"https://*/*",

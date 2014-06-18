@@ -1,133 +1,43 @@
 <!doctype html>
 <html data-ng-app="linkslap">
-  <head>
-    <title>Linkslap</title>
-	<link href="./css/bootstrap.min.css" rel="stylesheet">
-	<link href="./css/bootstrap-theme.min.css" rel="stylesheet">
-	<link href="./css/bootstrap-switch.css" rel="stylesheet">
-	<link href="./css/toastr.min.css" rel="stylesheet">
-	<link href="./css/angular-csp.css" rel="stylesheet">
-	<link href="./css/mediaelementplayer.css" rel="stylesheet">
-	<link href="./css/style.css" rel="stylesheet">
-  </head>
-  <body id="linkslap" ng-controller="Main">
-	<div id="main-container">
-		<script type="text/ng-template" id="notification">
-			<div class="notification-text">
-				<span>Add <em>{{notification.FeedName}}</em> to streams?</span>
-			</div>
-			<div class="btn-group">
-				<button type="button" class="btn btn-linkslap btn-xs" data-ng-click="addFeed(notification)">Yes</button>
-				<button type="button" class="btn btn-default btn-xs" data-ng-click="removeNotification(notification)">No</button>
-			</div>
-		</script>
-		<script type="text/ng-template" id="link">
-			<div class="notification-text">
-				<span>Open <em>{{notification.Url}}</em></span>
-			</div>
-			<div class="btn-group">
-				<button type="button" class="btn btn-linkslap btn-xs" data-ng-click="openLink(notification, true);removeNotification(notification);">Yes</button>
-				<button type="button" class="btn btn-default btn-xs" data-ng-click="removeNotification(notification)">No</button>
-			</div>
-		</script>
-		<script type="text/ng-template" id="missed">
-			<div class="notification-text">
-				<span>You missed <em>{{notification.SubmittedLinks.length}} slaps</em> on <em>{{notification.FeedName}}</em>.  Do you want to view them?</span>
-			</div>
-			<div class="btn-group">
-				<button type="button" class="btn btn-linkslap btn-xs" data-ng-click="openAllLinks(notification);removeNotification(notification);">Yes</button>
-				<button type="button" class="btn btn-default btn-xs" data-ng-click="removeNotification(notification)">No</button>
-			</div>
-		</script>
-		<header class="clearfix">
-			<div id="logo" class="pull-left"></div>
-			<div id="logo-text" class="pull-left"></div>
-			<div class="pull-right authenticate">
-				<a href="#" data-ng-click="logIn()" data-ng-hide="data.authenticated" class="pull-right btn btn-sm btn-linkslap">Log in</a>
-				<a href="#" data-ng-click="logOut()" data-ng-show="data.authenticated" class="pull-right btn btn-sm btn-linkslap">Log out</a>
-			</div>	
-		</header>	
-		<section id="notifications">
-			<ul>
-				<li data-ng-repeat="notification in notifications" class="clearfix">
-					<div ng-include="notification.template || 'notification'"></div>
-				</li>
-			</ul>
-		</section>
-		<section id="help" class="hidden">
-	        <iframe width="640" height="380" src="http://www.youtube.com/embed/xA9IPzL6zmU" frameborder="0" allowfullscreen></iframe>
-		</section>
-		<section id="feeds">
-			<ul>
-				<li data-ng-repeat="feed in feeds" class="stream">
-					<div class="btn-group">
-						<button type="button" class="feed-btn btn btn-linkslap" data-ng-class="{disabled: feed.stopped}" data-ng-click="sharePage(feed)" title="Slap link to {{feed.name}}">
-							<span data-ng-hide="feed.editing">{{feed.name}}</span>
-							<form data-ng-submit="finishEditFeed(feed)" data-ng-show="feed.editing">
-								<input placeholder="Name your new stream" data-ng-blur="finishEditFeed(feed)" data-ng-focus="feed == current" type="text" data-ng-model="feed.name" />
-							</form>
-						</button>
-						<button class="btn btn-linkslap" data-ng-class="{disabled: feed.stopped}" title="Slap link with title to {{feed.name}}." data-ng-click="shareWithComment(feed)" data-ng-disabled="!feed.Key">
-							<span class="glyphicon glyphicon-comment"></span>
-						</button>
-						<button type="button" class="btn btn-linkslap" title="View {{feed.name}} stream." data-ng-click="openStream(feed)" data-ng-disabled="!feed.Key">
-							<span class="glyphicon glyphicon-new-window"></span>
-						</button>
-						<button class="btn btn-linkslap dropdown-btn" bs-dropdown="" title="Stream options for {{feed.name}}.">
-							<span class="glyphicon glyphicon-cog"></span>
-						</button>
-						<ul class="dropdown-menu">
-							<li><a href="#" data-ng-click="shareWithComment(feed, true)">Slap anonymously</a></li>
-							<li><a href="#" data-ng-click="shareFeed(feed)" title="Copy {{feed.Name}} URL to clipboard.">Share Stream</a></li>
-							<li><a href="#" data-ng-click="editFeed(feed)">Rename</a></li>
-							<li class="dropdown-submenu">
-								<a href="#">Settings</a>
-								<ul class="dropdown-menu keep-open">
-									<li data-ng-class="{disabled: feed.stopped}">
-										<a href="#" title="Do not pop up slaps in new window. Add to notifications.">
-											<input type="checkbox" data-ng-checked="feed.useNotifications" data-ng-switch-component="feed.useNotifications = !feed.useNotifications;saveFeed();" data-ng-disabled="feed.stopped" />
-											Hide Stream
-										</a>
-									</li>
-									<li data-ng-class="{disabled: feed.stopped}">
-										<a href="#" title="Open all slaps in incognito">
-											<input type="checkbox" data-ng-checked="feed.incognito" data-ng-switch-component="feed.incognito = !feed.incognito;saveFeed();" data-ng-disabled="feed.stopped"/>
-											Use Incognito
-										</a>
-									</li>
-									<li class="divider"></li>
-									<li>
-										<a href="#" title="Completely ignore the stream. You won't get any notifications.">
-											<input type="checkbox" data-ng-checked="feed.stopped" data-ng-switch-component="stopFeed(feed)" />
-											Ignore Stream
-										</a>
-									</li>
-								</ul>
-							</li>
-							<li class="divider"></li>
-							<li><a href="#" data-ng-click="removeFeed(feed)">Remove</a></li>
-						</ul>
-					</div>
-				</li>
-			</ul>
-		</section>
-		<section class="clearfix">
-			<a href="https://chrome.google.com/webstore/support/enedgjpcpdndphojklmjbcgcmdngigna?hl=en&gl=US" target="_blank" class="btn btn-linkslap pull-left" style="margin-left:10px;">Send Feedback</a>
-			<button id="newFeed" type="button" class="btn btn-linkslap pull-right" data-ng-click="newFeed()" title="Create a new Slap Stream to share with friends.">
-				<span>New Stream</span>
-			</button>
-		</section>
-	</div>
-	
-	<script type="text/javascript" src="./scripts/vendor/jquery-2.0.3.min.js"></script>
-	<script type="text/javascript" src="./scripts/vendor/angular.min.js"></script>
-	<script type="text/javascript" src="./scripts/vendor/bootstrap.min.js"></script>
-	<script type="text/javascript" src="./scripts/vendor/angular-strap.js"></script>
-	<script type="text/javascript" src="./scripts/vendor/bootstrap-switch.min.js"></script>
-	<script type="text/javascript" src="./scripts/vendor/toastr.min.js"></script>
-	<script type="text/javascript" src="./scripts/vendor/moment.min.js"></script>
-	<script type="text/javascript" src="./scripts/vendor/mediaelement-and-player.min.js"></script>
-	<script type="text/javascript" src="./scripts/app.js"></script>
-  </body>
+	<head>
+		<title>Linkslap</title>
+		<link rel="stylesheet" href="css/bootstrap.css"></link>
+		<link rel="stylesheet" href="css/style.css"></link>
+	</head>
+	<body ng-controller="MainCtrl as main">
+
+		<header>
+			<img src="img/logo.png" />
+			<img id="logoText" src="img/logo-text.png" />
+
+			<button data-ng-if="isAuthenticated()" data-ng-click="logOut()" class="btn btn-xs btn-linkslap pull-right">Log out</button>
+		</header>
+		<div id="linkslap">
+			<div data-ng-view></div>
+		</div>
+
+		<script type="text/javascript" src="js/vendor/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="js/vendor/moment-with-langs.min.js"></script>
+
+		<!-- Angular -->
+		<script type="text/javascript" src="js/vendor/angular.js"></script>
+		<script type="text/javascript" src="js/vendor/angular-route.js"></script>
+		<script type="text/javascript" src="js/vendor/ngStorage.js"></script>
+		<script type="text/javascript" src="js/vendor/restangular.js"></script>
+		<script type="text/javascript" src="js/vendor/lodash.min.js"></script>
+
+		<!-- App -->
+		<script type="text/javascript" src="js/app.js"></script>
+
+		<!-- Controllers -->
+		<script type="text/javascript" src="js/controllers/main-controller.js"></script>
+		<script type="text/javascript" src="js/controllers/authenticate-controller.js"></script>
+		<script type="text/javascript" src="js/controllers/register-controller.js"></script>
+
+		<!-- Services, factories, and providers -->
+		<script type="text/javascript" src="js/services/account-service.js"></script>
+		<script type="text/javascript" src="js/providers/settings-provider.js"></script>
+	</body>
 </html>
 

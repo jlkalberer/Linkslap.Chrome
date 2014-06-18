@@ -1,0 +1,28 @@
+<div data-ng-controller="RegisterCtrl as register" class="row">
+	<form class="col-xs-12" data-ng-submit="submitForm()">
+		<h2 class="title">Register</h2>
+		<div class="alert alert-danger" data-ng-if="errorMessage && errorMessage.length">
+			<p data-ng-repeat="error in errorMessage">{{error}}</p>
+		</div>
+		<div class="form-group">
+			<label for="userName" class="control-label">Email</label>
+			<input type="text" class="form-control" id="userName" placeholder="Enter email" data-ng-model="model.email" />
+		</div>
+		<div class="form-group">
+			<label for="userName" class="control-label">User name</label>
+			<input type="text" class="form-control" id="userName" placeholder="Enter user name" data-ng-model="model.userName" />
+		</div>
+		<div class="form-group">
+			<label for="password" class="control-label">Password</label>
+			<input type="password" class="form-control" id="password" placeholder="Enter password" data-ng-model="model.password" />
+		</div>
+		<div class="form-group">
+			<label for="password" class="control-label">Confirm Password</label>
+			<input type="password" class="form-control" id="password" placeholder="Enter password" data-ng-model="model.confirmPassword" />
+		</div>
+		<div class="form-group clearfix">
+			<a href="#/authenticate">Back</a>
+			<button class="btn btn-linkslap btn-lg pull-right" type="submit" data-ng-disabled="!model.email || !model.userName || !model.password || !model.confirmPassword || disableButton">Register</button>
+		</div>
+	</form>
+</div>

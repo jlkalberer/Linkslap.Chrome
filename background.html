@@ -1,13 +1,24 @@
 <!doctype html>
-<html>
-  <body>
-	<script src="./scripts/vendor/jquery-2.0.3.min.js"></script>
-	<script src="./scripts/vendor/jquery.cookie.js"></script>
-	<script src="./scripts/vendor/jquery.signalR-2.0.0.min.js"></script>
-	<script src="./scripts/vendor/hubs.js"></script>
-	<script type="text/javascript" src="./scripts/vendor/moment.min.js"></script>
-	<script type="text/javascript" src="./scripts/settings.js"></script>
-	<script src="./scripts/background.js"></script>
-  </body>
+<html data-ng-app="linkslap">
+  	<body>
+  		<script type="text/javascript" src="js/vendor/jquery-2.1.1.min.js"></script>
+  		<script type="text/javascript" src="js/vendor/jquery.signalR-2.1.0.js"></script>
+		<script type="text/javascript" src="js/vendor/hubs.js"></script>
+		<script type="text/javascript" src="js/vendor/moment-with-langs.min.js"></script>
+
+		<!-- Angular -->
+		<script type="text/javascript" src="js/vendor/angular.js"></script>
+		<script type="text/javascript" src="js/vendor/ngStorage.js"></script>
+		<script type="text/javascript" src="js/vendor/restangular.js"></script>
+		<script type="text/javascript" src="js/vendor/lodash.min.js"></script>
+
+		<!-- App -->
+		<script type="text/javascript" src="js/background.js"></script>
+
+  		<!-- Services, factories, and providers -->
+		<script type="text/javascript" src="js/services/account-service.js"></script>
+		<script type="text/javascript" src="js/factories/signalr-hub.js"></script>
+		<script type="text/javascript" src="js/providers/settings-provider.js"></script>
+  	</body>
 </html>
 
