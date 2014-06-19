@@ -1,0 +1,34 @@
+html {
+	overflow:hidden;
+	background: #323232;
+	margin-bottom: -20px;
+}
+
+#content {
+	background: #99cfd9;
+	color:#ffffff;
+}
+.container {
+	padding-left: 40px;
+	height: 100px;
+	max-width:100%;
+}
+#logo {
+	background: url("../img/icon-90.png") no-repeat 0 50%;
+	display: block;
+	width: 90px;
+	height: 100px;
+	overflow: hidden;
+	text-indent: 100%;
+	float: left;
+}
+h2 {
+	margin:0;
+}
+.navbar-nav li {
+	margin:10px 20px;
+}
+	#comments { 
+		margin-top:0;
+		font-size: 20px;
+	}

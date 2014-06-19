@@ -1,0 +1,15 @@
+<div data-ng-controller="ListingCtrl" class="row">
+	<div class="col-xs-12">
+		<ul class="list-group">
+			<li class="btn-group" data-ng-repeat="subscription in subscriptions">
+				<button data-ng-click="sharePage(subscription)" class="share-button btn btn-linkslap" title="Share to {{subscription.Stream.Name}}">{{subscription.Stream.Name}}</button>
+				<button data-ng-click="sharePageWithComment(subscription)" class="btn btn-linkslap" title="Share to {{subscription.Stream.Name}} with comment"><i class="glyphicon glyphicon-comment" /></button>
+				<button data-ng-click="openStream(subscription)" class="btn btn-linkslap" title="Open stream"><i class="glyphicon glyphicon-new-window" /></button>
+				<button class="btn btn-linkslap" title="Edit stream"><i class="glyphicon glyphicon-cog" /></button>
+			</li>
+		</ul>
+	</div>
+	<div class="col-xs-12 text-right">
+		<a href="#/new-stream" class="btn btn-linkslap">New Stream</a>
+	</div>
+</div>

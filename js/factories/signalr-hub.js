@@ -1,9 +1,9 @@
-angular.module('SignalR', [])
+angular.module('linkslap')
 	.constant('$', $)
-	.factory('Hub', ['$', function ($) {
+	.factory('Hub', ['$', 'Settings', function ($, settings) {
 		//This will allow same connection to be used for all Hubs
 		//It also keeps connection as singleton.
-		var globalConnection = $.hubConnection();
+		var globalConnection = $.hubConnection(settings.baseUrl + "signalr");
 		return function (hubName, listeners, methods) {
 			var Hub = this;
 			Hub.connection = globalConnection;
@@ -29,8 +29,10 @@ angular.module('SignalR', [])
 					};
 				});
 			}
+			
 			//Adding additional property of promise allows to access it in rest of the application.
-			Hub.promise = Hub.connection.start();		
+			Hub.promise = Hub.connection.start();	
+
 			return Hub;
 		};
 	}]);

@@ -11,7 +11,10 @@
 			<img src="img/logo.png" />
 			<img id="logoText" src="img/logo-text.png" />
 
-			<button data-ng-if="isAuthenticated()" data-ng-click="logOut()" class="btn btn-xs btn-linkslap pull-right">Log out</button>
+			<div data-ng-if="isAuthenticated()" class="pull-right text-right">
+				<strong>Welcome {{account.userName}}</strong><br/>
+				<button data-ng-click="logOut()" class="btn btn-xs btn-linkslap">Log out</button>
+			</div>
 		</header>
 		<div id="linkslap">
 			<div data-ng-view></div>
@@ -34,10 +37,13 @@
 		<script type="text/javascript" src="js/controllers/main-controller.js"></script>
 		<script type="text/javascript" src="js/controllers/authenticate-controller.js"></script>
 		<script type="text/javascript" src="js/controllers/register-controller.js"></script>
+		<script type="text/javascript" src="js/controllers/listing-controller.js"></script>
+		<script type="text/javascript" src="js/controllers/new-stream-controller.js"></script>
 
 		<!-- Services, factories, and providers -->
 		<script type="text/javascript" src="js/services/account-service.js"></script>
 		<script type="text/javascript" src="js/providers/settings-provider.js"></script>
+		<script type="text/javascript" src="js/providers/popup-browser-provider.js"></script>
 	</body>
 </html>
 

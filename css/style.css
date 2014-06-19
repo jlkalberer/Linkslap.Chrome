@@ -72,4 +72,8 @@ header {
 }
 .title {
   margin-top:0;
+  color: rgb(50,50,50);
+}
+.share-button {
+  width:250px;
 }

@@ -1,0 +1,49 @@
+<!doctype html>
+<html data-ng-app="linkslap">
+	<head>
+		<title>Linkslap</title>
+		<link rel="stylesheet" href="css/bootstrap.css"></link>
+		<link rel="stylesheet" href="css/header.css"></link>
+	</head>
+	<body id="content">
+		<header class="container" data-ng-controller="HeaderCtrl">
+			<a id="logo" href="http://linkslap.me" target="_blank">Linkslap</a>
+			<ul class="nav navbar-nav">
+				<li class="hidden">
+					<div id="vote" class="btn-group-vertical">
+						<button type="button" class="btn btn-default">
+							<span class="glyphicon glyphicon-chevron-up"></span>
+						</button>
+						<button type="button" class="btn btn-default">
+							<span class="glyphicon glyphicon-chevron-down"></span>
+						</button>
+					</div>
+				</li>
+				<li>
+					<p id="comments">{{link.comment}}</p>
+					<label>Slapped at <em>{{link.createdDate}}</em> by <span id="by">{{link.userName}}</span> to <a href="{{link.Url}}" target="_blank">{{link.streamName}}</a></label>
+				</li>
+			</ul>
+		</header>
+
+		<script type="text/javascript" src="js/vendor/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="js/vendor/moment-with-langs.min.js"></script>
+
+		<!-- Angular -->
+		<script type="text/javascript" src="js/vendor/angular.js"></script>
+		<script type="text/javascript" src="js/vendor/ngStorage.js"></script>
+		<script type="text/javascript" src="js/vendor/restangular.js"></script>
+		<script type="text/javascript" src="js/vendor/lodash.min.js"></script>
+
+		<!-- App -->
+		<script type="text/javascript" src="js/header-app.js"></script>
+
+		<!-- Controllers -->
+		<script type="text/javascript" src="js/controllers/header-controller.js"></script>
+
+		<!-- Services, factories, and providers -->
+		<script type="text/javascript" src="js/services/account-service.js"></script>
+		<script type="text/javascript" src="js/providers/settings-provider.js"></script>
+	</body>
+</html>
+

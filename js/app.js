@@ -11,8 +11,13 @@
 				'templateUrl' : 'includes/register.html',
 				'controller' : 'RegisterCtrl'
 			})
+			.when('/new-stream', {
+				'templateUrl' : 'includes/new-stream.html',
+				'controller' : 'NewStreamCtrl'
+			})
 			.when('/', {
-				'controller' : 'MainCtrl'
+				'templateUrl' : 'includes/listing.html',
+				'controller' : 'ListingCtrl'
 			})
             .otherwise({
                 redirectTo: '/'

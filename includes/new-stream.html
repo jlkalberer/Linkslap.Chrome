@@ -1,0 +1,17 @@
+<div data-ng-controller="NewStreamCtrl" class="row">
+	<form class="col-xs-12" data-ng-submit="submitForm()">
+		<h2 class="title">New Stream</h2>
+		<span class="help-block">Create a new stream and share the link with your friends.  Streams are used to share pages.</span>
+		<div class="alert alert-danger" data-ng-if="errorMessage">
+			{{ errorMessage }}
+		</div>
+		<div class="form-group">
+			<label for="streamName" class="control-label">Stream Name</label>
+			<input type="text" class="form-control" id="streamName" placeholder="Enter stream name" data-ng-model="streamName" />
+		</div>
+		<div class="form-group">
+			<a href="#/">Cancel</a>
+			<button class="btn btn-linkslap pull-right" type="submit" data-ng-disabled="!streamName || disableButton">Create New Stream</button>
+		</div>
+	</form>
+</div>

@@ -37,8 +37,29 @@
 				}
 			};
 
-		
+		rest.addFullRequestInterceptor(function (element, operation, route, url, headers, params, httpConfig) {
+			if (output.isAuthenticated()) {
+				headers.Authorization = 'Bearer ' + storage.auth.access_token;
+			}
 
+		    return {
+		        element: element,
+		        headers: headers,
+		        params: params,
+		        httpConfig: httpConfig
+		    };
+		});
+
+		rest.setErrorInterceptor(function (response, deferred, responseHandler) {
+		    if(response.status === 401) {
+		        storage.auth = null;
+
+		        return false; // error handled
+		    }
+
+		    return true; // error not handled
+		});
+		
 		return output;
 	}]);
 }());
