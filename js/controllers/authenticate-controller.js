@@ -1,11 +1,11 @@
 (function() {
-	var controller = function($scope, account, $location) {
+	var controller = function($scope, account, $location, browser) {
 		$scope.disableButton = false;
 
 		$scope.submitForm = function () {
 			$scope.disableButton = true;
 			
-			var authorization = account.login({ userName : $scope.userName, password : $scope.password });
+			var authorization = browser.login({ userName : $scope.userName, password : $scope.password });
 
 			authorization.then(function () {
 				// Go to listing view - successfully authenticated
@@ -18,5 +18,5 @@
 		};
 	};
 
-	angular.module('linkslap').controller("AuthenticateCtrl", [ '$scope', 'AccountService', '$location', controller ]);
+	angular.module('linkslap').controller("AuthenticateCtrl", [ '$scope', 'AccountService', '$location', 'Browser', controller ]);
 }());

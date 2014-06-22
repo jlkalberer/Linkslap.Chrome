@@ -1,7 +1,7 @@
 (function() {
 	var app = angular.module("linkslap");
 
-	app.factory('AccountService',[ 'Restangular', '$localStorage', function (rest, storage) {
+	app.factory('AccountService',[ '$rootScope', 'Restangular', '$localStorage', 'Browser', function (root, rest, storage, browser) {
 		var output = {
 				login: function (credentials) {
 					var authorization = rest.one('token').withHttpConfig({transformRequest: angular.identity});
@@ -19,7 +19,7 @@
 						});
 				},
 				logOut: function () {
-					storage.auth = null;
+					storage.$reset();
 				},
 				getAccount: function () {
 					return storage.auth;
@@ -36,6 +36,8 @@
 					return rest.one("api/account").customPOST(model, 'register');
 				}
 			};
+
+		browser.$on('login', output.login);
 
 		rest.addFullRequestInterceptor(function (element, operation, route, url, headers, params, httpConfig) {
 			if (output.isAuthenticated()) {

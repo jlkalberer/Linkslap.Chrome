@@ -1,5 +1,5 @@
 (function() {
-	var app = angular.module("linkslap", [ 'ngRoute', 'ngStorage', 'restangular' ]);
+	var app = angular.module("linkslap", [ 'ngRoute', 'restangular' ]);
 	
 	app.config(function ($routeProvider) {
 		$routeProvider

@@ -50,11 +50,20 @@
                         },
                         $reset: function(items) {
                             for (var k in $storage) {
-                                '$' === k[0] || delete $storage[k];
+                                '$' === k[0] || (delete $storage[k] && webStorage.removeItem('ngStorage-' + k));
                             }
 
                             return $storage.$default(items);
-                        }
+                        }/*,
+                        $set: function (key, value) {
+                            webStorage.setItem('ngStorage-' + key, angular.toJson(value));
+                        },
+                        $get: function (key) {
+                            return angular.fromJson(webStorage.getItem('ngStorage-' + key));
+                        },
+                        $delete: function (key) {
+                            return delete $storage[key] && webStorage.removeItem('ngStorage-' + key);
+                        }*/
                     },
                     _last$storage,
                     _debounce;

@@ -1,6 +1,7 @@
 angular.module('linkslap')
 	.factory('Link',['$rootScope', '$q','Hub', 'Restangular', 'Browser', function($rootScope, $q, Hub, rest, browser){
 	    var Links = this;
+	    var deferred = $q.defer();
 
 	    var hub = new Hub('link', {
 		        'openLink': function (link) {
@@ -21,22 +22,36 @@ angular.module('linkslap')
 	    }
 
 	    Links.updateSubscriptions = function () {
+	    	if (Links.subscriptions) {
+	    		_.each(Links.subscriptions.$object, function (sub) {
+	    			hub.unsubscribe(sub.streamId);
+	    		});
+	    	}
+
 		    Links.subscriptions = rest.all('api/subscription').getList();
+
+		    Links.subscriptions.then(function (values) {
+		    	browser.$trigger('subscriptions.updated', values);
+		    });
+
+		    $q.all([Links.subscriptions, deferred.promise]).then(function() {
+		    	var items = Links.subscriptions.$object;
+		    	for (var i = 0; i < items.length; i += 1) {
+	    			hub.subscribe(items[i].Stream.Key);
+	    		}
+		    });
+
+		    return Links.subscriptions;
 	    };
-
-	    Links.updateSubscriptions();
-
-	    var deferred = $q.defer();
 
 	    hub.promise.then(function() {
 	    	deferred.resolve();
 	    });
 
-	    $q.all([Links.subscriptions, deferred.promise]).then(function() {
-	    	var items = Links.subscriptions.$object;
-	    	for (var i = 0; i < items.length; i += 1) {
-    			hub.subscribe(items[i].Stream.Key);
-    		}
+	    Links.updateSubscriptions();	
+
+	    browser.$on('subscriptions.get', function () {
+	    	browser.$trigger('subscriptions.updated', Links.subscriptions);
 	    });
 
 	    return Links;
