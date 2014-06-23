@@ -16,17 +16,22 @@
 							})
 						.then(function (response) {
 							storage.auth = response;
+
+							browser.$trigger('account.loggedin', response);
+
+							return response;
 						});
 				},
 				logOut: function () {
 					storage.$reset();
+		        	browser.$trigger('account.loggedout', null);
 				},
 				getAccount: function () {
 					return storage.auth;
 				},
 				isAuthenticated: function () {
 
-					if (!this.getAccount()) {
+					if (!output.getAccount()) {
 						return false;
 					}
 
@@ -37,7 +42,9 @@
 				}
 			};
 
-		browser.$on('login', output.login);
+		for (var key in output) {
+			browser.$on('account.' + key.toLowerCase(), output[key]);
+		}
 
 		rest.addFullRequestInterceptor(function (element, operation, route, url, headers, params, httpConfig) {
 			if (output.isAuthenticated()) {
@@ -54,7 +61,7 @@
 
 		rest.setErrorInterceptor(function (response, deferred, responseHandler) {
 		    if(response.status === 401) {
-		        storage.auth = null;
+		    	output.logout();
 
 		        return false; // error handled
 		    }

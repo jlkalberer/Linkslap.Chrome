@@ -1,13 +1,11 @@
 (function() {
 	var controller = function($scope, browser, settings) {
-		$scope.subscriptions = [];
-		browser.$on('subscriptions.updated', function (values) {
-			$scope.$apply(function () {
-				$scope.subscriptions = values.$object;
-			});
+		browser.$trigger('subscriptions.get').then(function (values) {
+			$scope.subscriptions = values;
 		});
-
-		browser.$trigger('subscriptions.get');
+		browser.$on('subscriptions.updated', function (values) {
+			$scope.subscriptions = values;
+		});
 
 		$scope.sharePage = function (subscription) {
 

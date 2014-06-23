@@ -51,7 +51,7 @@ angular.module('linkslap')
 	    Links.updateSubscriptions();	
 
 	    browser.$on('subscriptions.get', function () {
-	    	browser.$trigger('subscriptions.updated', Links.subscriptions);
+	    	return Links.subscriptions.$object;
 	    });
 
 	    return Links;

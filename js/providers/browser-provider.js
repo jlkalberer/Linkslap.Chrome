@@ -86,12 +86,14 @@ angular
 
 						var output = event.callback(msg.data);
 
-						if (!output || !output.then) {
-							return;
-						}
-
 						var defer = $q.defer();
 						promises.push(defer.promise);
+
+						if (!output || !output.then) {
+							responses.push({type:'success', data: output});
+							defer.resolve();
+							return;
+						}
 
 						output.then(function(response) {
 							responses.push({type:'success', data: response});
@@ -178,7 +180,7 @@ angular
 		}
 
 		// At some point this may be filled with things that aren't constants..
-		this.$get = ['$rootScope', '$q', function (root, q) {
+		this.$get = ['$q', function (q) {
 			$q = q;
 
 			return { 

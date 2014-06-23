@@ -31,8 +31,14 @@
 			rest.setBaseUrl(settings.baseUrl);
 		}])
 		.run(['$rootScope', 'AccountService', '$location', function(root, auth, $location) {
-			root.$on( "$routeChangeStart", function(event, next, current) {
-				if (!auth.isAuthenticated() && next.$$route.originalPath !== '/register') {
+			auth.accountLoaded.then(function (value) {
+				root.$on( "$routeChangeStart", function(event, next, current) {
+					if (!auth.isAuthenticated() && next.$$route.originalPath !== '/register') {
+						$location.path('/authenticate');
+					}
+				});
+
+				if (!value) {
 					$location.path('/authenticate');
 				}
 			});
