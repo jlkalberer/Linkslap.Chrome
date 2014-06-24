@@ -21,7 +21,7 @@
 				</li>
 				<li>
 					<p id="comments">{{link.comment}}</p>
-					<label>Slapped at <em>{{link.createdDate}}</em> by <span id="by">{{link.userName}}</span> to <a href="{{link.Url}}" target="_blank">{{link.streamName}}</a></label>
+					<label>Slapped at <em>{{link.createdDate}}</em> by <span id="by">{{link.userName}}</span> to <a href="{{link.url}}" target="_blank">{{link.streamName}}</a></label>
 				</li>
 			</ul>
 		</header>
@@ -42,8 +42,9 @@
 		<script type="text/javascript" src="js/controllers/header-controller.js"></script>
 
 		<!-- Services, factories, and providers -->
-		<script type="text/javascript" src="js/services/account-service.js"></script>
+		<script type="text/javascript" src="js/services/popup-account-service.js"></script>
 		<script type="text/javascript" src="js/providers/settings-provider.js"></script>
+		<script type="text/javascript" src="js/providers/popup-browser-provider.js"></script>
 	</body>
 </html>
 

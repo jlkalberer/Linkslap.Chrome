@@ -61,7 +61,7 @@
 
 		rest.setErrorInterceptor(function (response, deferred, responseHandler) {
 		    if(response.status === 401) {
-		    	output.logout();
+		    	output.logOut();
 
 		        return false; // error handled
 		    }

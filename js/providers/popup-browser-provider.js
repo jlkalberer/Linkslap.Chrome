@@ -8,20 +8,11 @@ angular
 				$tabs = chrome.tabs,
 				currentWindow = null,
 				messageEvents = [],
-				port = null,
-				listener;
+				port = null;
 
-			var background = chrome.extension.getBackgroundPage();
-
-			var disconnect = function () {
-				port = chrome.runtime.connect({name: "linkslap"});
-				port.onMessage.addListener(listener);
-				port.onDisconnect.addListener(disconnect);
-			};
-			
 			this.$get = ['$q', function ($q) {
 
-				listener = function(msg) {
+				function Listener(msg) {
 					var responses = [], promises = [];
 					_.each(messageEvents, function (event) {
 						if (msg.eventName !== event.eventName) {
@@ -66,6 +57,15 @@ angular
 					});
 				};
 
+				function Disconnect() {
+					port = chrome.runtime.connect({name: "linkslap"});
+					port.onMessage.addListener(Listener);
+					port.onDisconnect.addListener(Disconnect);
+				};
+
+				// run this to connect the first time
+				Disconnect();
+
 				var guid = (function() {
 				  function s4() {
 				    return Math.floor((1 + Math.random()) * 0x10000)
@@ -79,8 +79,6 @@ angular
 				})();
 
 				output = {
-					openTab: background.browser.openTab,
-					openTabPage: background.browser.openTabPage,
 					$on: function (eventName, callback) {
 						messageEvents.push({eventName: eventName, callback: callback});
 					},
@@ -109,13 +107,17 @@ angular
 					}
 				};
 
+				if (chrome.extension.getBackgroundPage) {
+					var background = chrome.extension.getBackgroundPage();
+					output.openTab = background.browser.openTab;
+					output.openTabPage = background.browser.openTabPage;
+				}
+
 				output.$on("subscriptions.updated", function (values) {
 					var v = 0;
 				});
 
 				return output;
 			}];
-
-			disconnect();
 		}
 	});

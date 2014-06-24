@@ -28,7 +28,7 @@
 					return true;
 				},
 				register: function (model) {
-					return browser.$trigger('account.trigger', model);
+					return browser.$trigger('account.register', model);
 				},
 				// This is used in the main app.js in order to go to the auth screen if the user hasn't logged in
 				accountLoaded: browser.$trigger('account.getaccount').then(function (value) {

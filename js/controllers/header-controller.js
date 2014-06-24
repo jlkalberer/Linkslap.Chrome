@@ -23,7 +23,7 @@
 		}
 
 		$scope.link = getUrlVars();
-		$scope.link.url = settings.baseUrl + $scope.link.url;
+		$scope.link.url = settings.baseUrl + 's/' + $scope.link.streamKey;
 		$scope.link.createdDate = moment($scope.link.createdDate, settings.dateFormat).format("M/D/YYYY h:mm a");
 	};
 
