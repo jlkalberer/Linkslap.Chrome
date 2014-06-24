@@ -1,9 +1,10 @@
 angular.module('linkslap')
-	.factory('Link',['$rootScope', '$q','Hub', 'Restangular', 'Browser', function($rootScope, $q, Hub, rest, browser){
+	.factory('Link',['$rootScope', '$q','Hub', 'Restangular', 'Browser', 'AccountService', function($rootScope, $q, Hub, rest, browser, account){
 	    var Links = this;
+	    var subscriptions;
 	    var deferred = $q.defer();
 
-	    var hub = new Hub('link', {
+	    var linkHub = new Hub('link', {
 		        'openLink': function (link) {
 		        	browser.openTab(link);
 		        }
@@ -12,46 +13,90 @@ angular.module('linkslap')
 	        ['subscribe', 'unsubscribe']
 	    );
 
+	    Links.subscriptions = [];
+	    var streamHub = new Hub('subscription', {
+	    		'addSubscription': function (subscription) {
+	    			Links.subscriptions.push(subscription);
+		    		browser.$trigger('subscriptions.updated', Links.subscriptions);
+	    		},
+	    		'removeSubscription': function (subscriptionId) {
+
+	    		}
+	    	}, 
+	        //Server method stubs for ease of access
+	        ['subscribe', 'unsubscribe']
+	    );
+
+	    var user = account.getAccount();
+
+	    if (user) {
+	    	streamHub.promise.then(function() {
+		    	streamHub.subscribe(user.id);
+	    	});
+	    }
+
 	    Links.subscribe = function (subscription) {
-	        hub.subscribe(subscription.streamId); //Calling a server method
-	        Links.subscriptions.post({ id : subscription.streamId });
+	        linkHub.subscribe(subscription.streamId); //Calling a server method
+	        subscriptions.post({ id : subscription.streamId });
 	    };
 	    Links.unsubscribe = function (subscription) {
-	        hub.unsubscribe(subscription.streamId); //Calling a server method
-	        Links.subscriptions.remove({ id : subscription.streamId });
+	        linkHub.unsubscribe(subscription.streamId); //Calling a server method
+	        subscriptions.remove({ id : subscription.streamId });
 	    }
 
 	    Links.updateSubscriptions = function () {
-	    	if (Links.subscriptions) {
-	    		_.each(Links.subscriptions.$object, function (sub) {
-	    			hub.unsubscribe(sub.streamId);
-	    		});
-	    	}
+		    subscriptions = rest.all('api/subscription').getList();
 
-		    Links.subscriptions = rest.all('api/subscription').getList();
-
-		    Links.subscriptions.then(function (values) {
+		    subscriptions.then(function (values) {
+		    	Links.subscriptions = values;
 		    	browser.$trigger('subscriptions.updated', values);
 		    });
 
-		    $q.all([Links.subscriptions, deferred.promise]).then(function() {
-		    	var items = Links.subscriptions.$object;
+		    $q.all([subscriptions, deferred.promise]).then(function() {
+		    	var items = subscriptions;
 		    	for (var i = 0; i < items.length; i += 1) {
-	    			hub.subscribe(items[i].Stream.Key);
+	    			linkHub.subscribe(items[i].Stream.Key);
 	    		}
 		    });
 
-		    return Links.subscriptions;
+		    return subscriptions;
 	    };
 
-	    hub.promise.then(function() {
+	    linkHub.promise.then(function() {
 	    	deferred.resolve();
 	    });
 
 	    Links.updateSubscriptions();	
 
 	    browser.$on('subscriptions.get', function () {
-	    	return Links.subscriptions.$object;
+	    	if (!Links.subscriptions) {
+	    		return null;
+	    	}
+
+	    	return Links.subscriptions;
+	    });
+
+	    var userId = null;
+	    $rootScope.$on('account.loggedin', function (result) {
+	    	userId	 = result.id;
+	    	streamHub.subscribe(userId);
+	    	Links.updateSubscriptions();
+	    });
+
+
+	    $rootScope.$on('account.loggedout', function (result) {
+	    	if (userId) {
+		    	streamHub.unsubscribe(userId);
+		    	userId = null;
+	    	}
+
+	    	if (!Links.subscriptions) {
+	    		return;
+	    	}
+
+    		_.each(Links.subscriptions, function (sub) {
+    			linkHub.unsubscribe(sub.streamId);
+    		});
 	    });
 
 	    return Links;

@@ -90,11 +90,15 @@
              }
         };
 
-        proxies['Stream'] = this.createHubProxy('Stream'); 
-        proxies['Stream'].client = { };
-        proxies['Stream'].server = {
-            subscribe: function (feedKey) {
-                return proxies['Stream'].invoke.apply(proxies['Stream'], $.merge(["Subscribe"], $.makeArray(arguments)));
+        proxies['Subscription'] = this.createHubProxy('Subscription'); 
+        proxies['Subscription'].client = { };
+        proxies['Subscription'].server = {
+            subscribe: function (streamKey) {
+                return proxies['Subscription'].invoke.apply(proxies['Subscription'], $.merge(["Subscribe"], $.makeArray(arguments)));
+             },
+
+            unSubscribe: function (streamKey) {
+                return proxies['Subscription'].invoke.apply(proxies['Subscription'], $.merge(["UnSubscribe"], $.makeArray(arguments)));
              }
         };
 

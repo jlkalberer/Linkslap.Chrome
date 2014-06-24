@@ -17,6 +17,7 @@
 						.then(function (response) {
 							storage.auth = response;
 
+							root.$emit('account.loggedin', response);
 							browser.$trigger('account.loggedin', response);
 
 							return response;
@@ -24,6 +25,7 @@
 				},
 				logOut: function () {
 					storage.$reset();
+					root.$emit('account.loggedout');
 		        	browser.$trigger('account.loggedout', null);
 				},
 				getAccount: function () {
