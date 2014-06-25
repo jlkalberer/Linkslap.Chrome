@@ -24,7 +24,7 @@
 						});
 				},
 				logOut: function () {
-					storage.$reset();
+					storage.auth = null;
 					root.$emit('account.loggedout');
 		        	browser.$trigger('account.loggedout', null);
 				},

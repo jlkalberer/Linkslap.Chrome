@@ -1,5 +1,5 @@
 angular.module('linkslap')
-	.factory('Link',['$rootScope', '$q','Hub', 'Restangular', 'Browser', 'AccountService', function($rootScope, $q, Hub, rest, browser, account){
+	.factory('Link',['$rootScope', '$q', '$localStorage', 'Settings', 'Hub', 'Restangular', 'Browser', 'AccountService', function($rootScope, $q, storage, settings, Hub, rest, browser, account){
 	    var Links = this;
 	    var subscriptions;
 	    var deferred = $q.defer();
@@ -10,6 +10,10 @@ angular.module('linkslap')
 
 	    var linkHub = new Hub('link', {
 		        'openLink': function (link) {
+		        	if (link.id && link.createdDate) {
+		        		storage.lastUpdated = moment(link.createdDate).format(settings.dateFormat);
+		        	}
+
 		        	browser.openTab(link);
 		        }
 		    }, 
@@ -29,7 +33,7 @@ angular.module('linkslap')
 	    			Links.subscriptions = _.difference(Links.subscriptions, _.filter(Links.subscriptions, function (item) {
 	    				return item.stream.key === streamKey;
 	    			}));
-	    			
+
 		    		browser.$trigger('subscriptions.updated', Links.subscriptions);
 	    		}
 	    	}, 
