@@ -1,23 +1,18 @@
 (function() {
-	var controller = function($scope, $location) {
+	var controller = function($scope, $location, rest) {
 		$scope.disableButton = false;
 
 		$scope.submitForm = function () {
 			$scope.disableButton = true;
 			
-			/*
-			var authorization = account.login({ userName : $scope.userName, password : $scope.password });
-
-			authorization.then(function () {
-				// Go to listing view - successfully authenticated
-				$location.path("/");
-			}, function (response) {
-				$scope.disableButton = false;
-				$scope.errorMessage = response.data.error_description;
-			});
-			*/
+			rest.all('api/stream').post({name: $scope.streamName})
+				.then(function () {
+					$location.path('/');
+				}, function () {
+					$scope.disableButton = false;
+				});
 		};
 	};
 
-	angular.module('linkslap').controller("NewStreamCtrl", [ '$scope', '$location', controller ]);
+	angular.module('linkslap').controller("NewStreamCtrl", [ '$scope', '$location', 'Restangular', controller ]);
 }());

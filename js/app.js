@@ -15,6 +15,14 @@
 				'templateUrl' : 'includes/new-stream.html',
 				'controller' : 'NewStreamCtrl'
 			})
+			.when('/share-link/:subscriptionId', {
+				'templateUrl' : 'includes/share-link.html',
+				'controller' : 'ShareLinkCtrl'
+			})
+			.when('/settings/:subscriptionId', {
+				'templateUrl' : 'includes/subscription-settings.html',
+				'controller' : 'SubscriptionSettingsCtrl'
+			})
 			.when('/', {
 				'templateUrl' : 'includes/listing.html',
 				'controller' : 'ListingCtrl'
@@ -43,4 +51,9 @@
 				}
 			});
 		}]);
+
+	app.config(function($compileProvider){
+	    $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|chrome-extension):/);
+  	});
+
 }());

@@ -69,6 +69,19 @@ angular
 				});
 			};
 
+			$on("browser.pagedetails", function () {
+				var defer = $q.defer();
+
+				$tabs.getSelected(null, function(tab) {
+					defer.resolve({
+						comment: tab.title,
+						url: tab.url
+					});
+				});
+
+				return defer.promise;
+			})
+
 			chrome.runtime.onConnect.addListener(function(port) {
 				// Not sure if I should filter by port name...
 				if (port.name !== 'linkslap') {

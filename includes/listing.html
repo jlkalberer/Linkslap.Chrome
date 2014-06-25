@@ -2,10 +2,9 @@
 	<div class="col-xs-12">
 		<ul class="list-group">
 			<li class="btn-group" data-ng-repeat="subscription in subscriptions">
-				<button data-ng-click="sharePage(subscription)" class="share-button btn btn-linkslap" title="Share to {{subscription.Stream.Name}}">{{subscription.Stream.Name}}</button>
-				<button data-ng-click="sharePageWithComment(subscription)" class="btn btn-linkslap" title="Share to {{subscription.Stream.Name}} with comment"><i class="glyphicon glyphicon-comment" /></button>
+				<a href="#/share-link/{{subscription.id}}"  class="share-button btn btn-linkslap" title="Share to {{subscription.stream.name}}">{{subscription.stream.name}}</a>
 				<button data-ng-click="openStream(subscription)" class="btn btn-linkslap" title="Open stream"><i class="glyphicon glyphicon-new-window" /></button>
-				<button class="btn btn-linkslap" title="Edit stream"><i class="glyphicon glyphicon-cog" /></button>
+				<a href="#/settings/{{subscription.id}}" class="btn btn-linkslap" title="Edit stream"><i class="glyphicon glyphicon-cog" /></a>
 			</li>
 		</ul>
 	</div>

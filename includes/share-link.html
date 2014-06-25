@@ -1,0 +1,17 @@
+<div data-ng-controller="ShareLinkCtrl" class="row">
+	<form class="col-xs-12" data-ng-submit="submitForm()">
+		<h2 class="title"><small>Share Link to</small><br/>{{subscription.stream.name}}</h2>
+		<div class="alert alert-danger" data-ng-if="errorMessage && errorMessage.length">
+			<p data-ng-repeat="error in errorMessage">{{error}}</p>
+		</div>
+		<div class="form-group">
+			<a href="#" class="pull-right" data-ng-click="preview($event)">Preview</a>
+			<label for="linkText" class="control-label">Title</label>
+			<textarea class="form-control" id="linkText" placeholder="Enter link title" data-ng-model="model.comment" rows="4"></textarea>
+		</div>
+		<div class="form-group">
+			<a href="#/">Cancel</a>
+			<button class="btn btn-lg btn-linkslap pull-right" type="submit" data-ng-disabled="!model.comment || disableButton">Share Link</button>
+		</div>
+	</form>
+</div>

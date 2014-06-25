@@ -1,0 +1,20 @@
+<div data-ng-controller="SubscriptionSettingsCtrl" class="row">
+	<div class="col-xs-12">
+		<div class="clearfix">
+			<h2 class="title pull-left"><small>settings</small><br/>{{subscription.stream.name}}</h2>
+			<a class="pull-right" href="#/">back</a>
+		</div>
+		<div class="alert alert-danger" data-ng-if="errorMessage && errorMessage.length">
+			<p data-ng-repeat="error in errorMessage">{{error}}</p>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<strong>Remove Stream</strong>
+				<button data-ng-click="removeSubscription()" class="btn btn-xs btn-linkslap pull-right">Remove</button>
+			</div>
+			<div class="panel-body">
+				This will remove the stream from all devices and you will no longer be notified of new links from this stream
+			</div>
+		</div>
+	</form>
+</div>

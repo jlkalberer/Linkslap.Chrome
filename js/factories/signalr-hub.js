@@ -1,9 +1,15 @@
 angular.module('linkslap')
 	.constant('$', $)
-	.factory('Hub', ['$', 'Settings', function ($, settings) {
+	.factory('Hub', ['$', '$timeout', 'Settings', function ($, $timeout, settings) {
 		//This will allow same connection to be used for all Hubs
 		//It also keeps connection as singleton.
 		var globalConnection = $.hubConnection(settings.baseUrl + "signalr");
+		$.connection.hub.disconnected(function() {
+		   $timeout(function() {
+		       $.connection.hub.start();
+		   }, 5000); // Restart connection after 5 seconds.
+		});
+
 		return function (hubName, listeners, methods) {
 			var Hub = this;
 			Hub.connection = globalConnection;

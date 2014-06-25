@@ -1,10 +1,9 @@
 (function() {
 	var app = angular.module("linkslap");
 
-	app.factory('AccountService', [ 'Browser', function (browser) {
-		var account = null;
-
-		return {
+	app.factory('AccountService', [ 'Browser', 'Restangular', function (browser, rest) {
+		var account = null,
+			output = {
 				login: function (credentials) {
 					return browser.$trigger('account.login', credentials).then(function(value) {
 						return account = value;
@@ -35,5 +34,22 @@
 					return account = value;
 				})
 			};
+
+
+
+		rest.addFullRequestInterceptor(function (element, operation, route, url, headers, params, httpConfig) {
+			if (output.isAuthenticated()) {
+				headers.Authorization = 'Bearer ' + account.access_token;
+			}
+
+		    return {
+		        element: element,
+		        headers: headers,
+		        params: params,
+		        httpConfig: httpConfig
+		    };
+		});
+
+		return output;
 	}]);
 }());

@@ -7,17 +7,8 @@
 			$scope.subscriptions = values;
 		});
 
-		$scope.sharePage = function (subscription) {
-
-		};
-		$scope.sharePageWithComment = function (subscription) {
-
-		};
 		$scope.openStream = function (subscription) {
-			browser.openTabPage(settings.baseUrl + 's/' + subscription.Stream.Key)
-		};
-		$scope.editStream = function (subscription) {
-
+			browser.openTabPage(settings.baseUrl + 's/' + subscription.stream.key)
 		};
 	};
 

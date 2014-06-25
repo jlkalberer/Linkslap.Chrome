@@ -12,15 +12,8 @@
 	}
 
 	var controller = function($scope, account, settings) {
-		$scope.isAuthenticated = function() {
-			$scope.account = account.getAccount();
-			return account.isAuthenticated();
-		};
-
-		$scope.logOut = function() {
-			account.logOut();
-			$location.path('/authenticate');
-		}
+		// TODO - Allow upvoting by grabbing account.  Need communication to background app.
+		// $scope.account = account.getAccount();
 
 		$scope.link = getUrlVars();
 		$scope.link.url = settings.baseUrl + 's/' + $scope.link.streamKey;
