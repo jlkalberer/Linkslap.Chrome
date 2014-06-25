@@ -104,6 +104,10 @@ angular
 			var messageHandler;
 
 			chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
+				if (sender.id !== chrome.runtime.id) {
+					return;
+				}
+
 				_.map(messageEvents, function (event) {
 					if (msg.eventName !== event.eventName) {
 						return;
@@ -116,6 +120,11 @@ angular
 			});
 
 			chrome.runtime.onConnect.addListener(function(port) {
+				// only allow from this extension
+				if (port.sender.id !== chrome.runtime.id) {
+					return;
+				}
+
 				// Not sure if I should filter by port name...
 				if (port.name !== 'linkslap') {
 					return;
@@ -123,7 +132,12 @@ angular
 
 				ports.push(port);
 
-				port.onMessage.addListener(function(msg) {
+				port.onMessage.addListener(function(msg, port) {
+					// only allow from this extension
+					if (port.sender.id !== chrome.runtime.id) {
+						return;
+					}
+					
 					var responses = [], promises = [];
 					_.map(messageEvents, function (event) {
 						if (msg.eventName !== event.eventName) {
