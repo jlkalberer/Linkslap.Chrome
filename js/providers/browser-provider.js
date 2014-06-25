@@ -99,7 +99,21 @@ angular
 				});
 
 				return defer.promise;
-			})
+			});
+
+			var messageHandler;
+
+			chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
+				_.map(messageEvents, function (event) {
+					if (msg.eventName !== event.eventName) {
+						return;
+					}
+
+					var output = event.callback(msg.data);
+
+					sendResponse(output);
+				});
+			});
 
 			chrome.runtime.onConnect.addListener(function(port) {
 				// Not sure if I should filter by port name...

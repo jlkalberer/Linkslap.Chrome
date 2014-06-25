@@ -20,12 +20,13 @@
 	"background" : {
 		"page" : "background.html"
 	},
-	/*"content_scripts": [
-	{
-	  "matches": ["http://localhost:37459/*", "http://linkslap.me/*" ],
-	  "js": ["/scripts/vendor/jquery-2.0.3.min.js","/scripts/content.js"],
-	  "run_at" : "document_start"
-	}],*/
+	"content_scripts": [
+		{
+		  "matches": ["http://localhost:37459/*", "http://linkslap.me/*", "http://linkslap2.azurewebsites.net/*" ],
+		  "js": ["/js/vendor/jquery-2.1.1.min.js","/js/site-integration.js"],
+		  "run_at" : "document_start"
+		}
+	],
 	"permissions": [
 		"http://*/*",
 		"https://*/*",
@@ -36,6 +37,5 @@
 	],
 	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
 	"incognito" : "spanning",
-	"key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC42mC/DRu5hGknoEQuYcJnTp1jNJ4XV7tetvvgwNvWI9ZFKJYdu0vcowTsrmrKxgABY8sU2SA4irPD51eB1/9DMXVZ348E5Qh+nuW/izrI0CVjNAmG5xOAzrGr6KzEIWLQgrboBBA25xthHzWGPna9qVjprOWUWxfdDiMBEMGt7QIDAQAB",
-	"web_accessible_resources": [ "header.html", "/css/header.css" ]
+	"key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC42mC/DRu5hGknoEQuYcJnTp1jNJ4XV7tetvvgwNvWI9ZFKJYdu0vcowTsrmrKxgABY8sU2SA4irPD51eB1/9DMXVZ348E5Qh+nuW/izrI0CVjNAmG5xOAzrGr6KzEIWLQgrboBBA25xthHzWGPna9qVjprOWUWxfdDiMBEMGt7QIDAQAB"
 }

@@ -55,13 +55,13 @@ angular.module('linkslap')
 	    	});
 	    }
 
-	    Links.subscribe = function (subscription) {
-	        linkHub.subscribe(subscription.streamId); //Calling a server method
-	        subscriptions.post({ id : subscription.streamId });
+	    Links.subscribe = function (streamKey) {
+	        linkHub.subscribe(streamKey); //Calling a server method
+	        subscriptionRest.post({ streamKey : streamKey });
 	    };
 	    Links.unsubscribe = function (subscription) {
 	        linkHub.unsubscribe(subscription.stream.key); //Calling a server method
-	        subscription = _.findWhere_(Links.subscriptions, {id : subscription.id});
+	        subscription = _.findWhere(Links.subscriptions, {id : subscription.id});
 
 	        if (!subscription) {
 	        	return;
@@ -163,6 +163,7 @@ angular.module('linkslap')
 	    });
 
 	    browser.$on('subscriptions.newstream', Links.newStream);
+	    browser.$on('subscriptions.subscribe', Links.subscribe);
 	    browser.$on('subscriptions.unsubscribe', Links.unsubscribe);
 
 	    var userId = null;
