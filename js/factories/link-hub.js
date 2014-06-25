@@ -1,5 +1,5 @@
 angular.module('linkslap')
-	.factory('Link',['$rootScope', '$q', '$localStorage', 'Settings', 'Hub', 'Restangular', 'Browser', 'AccountService', function($rootScope, $q, storage, settings, Hub, rest, browser, account){
+	.factory('Link',['$rootScope', '$q', '$localStorage', 'Hub', 'Restangular', 'Browser', 'AccountService', function($rootScope, $q, storage, Hub, rest, browser, account){
 	    var Links = this;
 	    var subscriptions;
 	    var deferred = $q.defer();
@@ -10,9 +10,15 @@ angular.module('linkslap')
 
 	    var linkHub = new Hub('link', {
 		        'openLink': function (link) {
-		        	if (link.id && link.createdDate) {
-		        		storage.lastUpdated = moment(link.createdDate).format(settings.dateFormat);
+		        	if (link.id && link.createdDate) {0
+		        		var acct = account.getAccount();
+
+		        		if (acct) {
+			        		storage[acct.id].lastUpdated = link.createdDate;
+		        		}
 		        	}
+
+		        	// TODO - add to notifications if the browser is idle
 
 		        	browser.openTab(link);
 		        }
@@ -55,7 +61,12 @@ angular.module('linkslap')
 	    };
 	    Links.unsubscribe = function (subscription) {
 	        linkHub.unsubscribe(subscription.stream.key); //Calling a server method
-	        subscription = _.where(Links.subscriptions, {id : subscription.id})[0];
+	        subscription = _.findWhere_(Links.subscriptions, {id : subscription.id});
+
+	        if (!subscription) {
+	        	return;
+	        }
+
 	        subscription.remove({ streamKey : subscription.stream.key });
 	    }
 
@@ -78,16 +89,56 @@ angular.module('linkslap')
 		    return subscriptions;
 	    };
 
-	    Links.newStream = function (streamName) {
-
-	    };
-
 	    linkHub.promise.then(function() {
 	    	Links.connectionId = linkHub.connection.id;	    	
 	    	deferred.resolve();
 	    });
 
-	    Links.updateSubscriptions();	
+
+	    var onLogin = function (acct) {
+		    if (!acct) {
+		    	return;
+		    }
+
+		    Links.updateSubscriptions();
+		    var model = {'lastUpdated': storage[acct.id].lastUpdated};
+		    rest.all('api/subscription/sync-links')
+		    	.getList(model)
+		    	.then(function (response) {
+		    		if (!response || response.length == 0) {
+		    			return;
+		    		}
+
+		    		var storedNotifications = storage[acct.id].linkNotifications || [];
+
+		    		_(response).each(function (subscriptionNotification) {
+		    			var existing = _(storedNotifications).findWhere({streamKey: subscriptionNotification.streamKey})
+
+		    			if (!existing) {
+		    				storedNotifications.push(subscriptionNotification);
+		    				return;
+		    			}
+
+		    			_(subscriptionNotification.submittedLinks).each(function (link) {
+		    				var existingLink = _(existing.submittedLinks).findWhere({id: link.id});
+
+		    				if (!existingLink) {
+		    					existing.submittedLinks.push(link);
+		    				}
+		    			});
+		    		});
+
+		    		if (response[0]) {
+		    			storage[acct.id].lastUpdated = response[0].lastUpdated || storage[acct.id].lastUpdated;
+		    		}
+
+					storage[acct.id].linkNotifications = storedNotifications;
+
+		    		browser.$trigger('subscriptions.synclinks', storedNotifications);
+		    	});
+	    };
+
+	    onLogin(account.getAccount());
 
 	    browser.$on('subscriptions.get', function () {
 	    	if (!Links.subscriptions) {
@@ -95,6 +146,20 @@ angular.module('linkslap')
 	    	}
 
 	    	return Links.subscriptions;
+	    });
+	    browser.$on('subscriptions.getlinknotifications', function () {
+	    	var acct = account.getAccount()
+	    	return storage[acct.id].linkNotifications || [];
+	    });
+
+	    browser.$on('subscriptions.removelinknotification', function (streamKey) {
+	    	var acct = account.getAccount();
+	    	var storedNotifications = storage[acct.id].linkNotifications;
+	    	storage[acct.id].linkNotifications = storedNotifications = _.without(storedNotifications, _.findWhere(storedNotifications, {streamKey: streamKey}));
+		    
+		    browser.$trigger('subscriptions.synclinks', storedNotifications);
+
+		    return storedNotifications;
 	    });
 
 	    browser.$on('subscriptions.newstream', Links.newStream);
@@ -105,6 +170,7 @@ angular.module('linkslap')
 	    	userId	 = result.id;
 	    	streamHub.subscribe(userId);
 	    	Links.updateSubscriptions();
+	    	onLogin(result);
 	    });
 
 

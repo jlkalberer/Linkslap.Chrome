@@ -1,7 +1,7 @@
 (function() {
 	var app = angular.module("linkslap");
 
-	app.factory('AccountService',[ '$rootScope', 'Restangular', '$localStorage', 'Browser', function (root, rest, storage, browser) {
+	app.factory('AccountService',[ '$rootScope', 'Restangular', '$localStorage', 'Browser', 'Settings', function (root, rest, storage, browser, settings) {
 		var output = {
 				login: function (credentials) {
 					var authorization = rest.one('token').withHttpConfig({transformRequest: angular.identity});
@@ -10,12 +10,21 @@
 						.customPOST(decodeURIComponent($.param({
 								'grant_type':'password',
 								'username': credentials.userName,
-								'password': credentials.password
+								'password': credentials.password,
+								'platform': 'chrome'
 							})), '', {}, { 
 								'Content-Type' : 'application/x-www-form-urlencoded'
 							})
 						.then(function (response) {
 							storage.auth = response;
+
+							if (!storage[response.id]) {
+								storage[response.id] = { };
+							}
+
+							if (!storage[response.id].lastUpdated) {
+								storage[response.id].lastUpdated = moment.utc().format(settings.dateFormat)
+							}
 
 							root.$emit('account.loggedin', response);
 							browser.$trigger('account.loggedin', response);

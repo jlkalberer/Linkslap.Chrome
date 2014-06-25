@@ -1,8 +1,23 @@
 <div data-ng-controller="ListingCtrl" class="row">
+	<div class="col-xs-12" data-ng-if="subscriptionNotifications.length">
+		<h4>Missed Links</h4>
+		<ul class="list-group">
+			<li class="list-group-item clearfix" data-ng-repeat="subscriptionNotification in subscriptionNotifications">
+				<div class="pull-right btn-group">
+	    			<button data-ng-click="openMissedLinks(subscriptionNotification)" class="btn btn-sm btn-primary"><span class="badge">{{subscriptionNotification.submittedLinks.length}}</span> View</button>
+	    			<button data-ng-click="dismissMissedLinks(subscriptionNotification)"  type="button" class="btn btn-sm btn-primary">Dismiss</button>
+	    		</div>
+    			<span class="list-group-item-heading">{{subscriptionNotification.streamName}}</span>
+			</li>
+		</ul>
+	</div>
 	<div class="col-xs-12">
+		<h4>Streams</h4>
 		<ul class="list-group">
 			<li class="btn-group" data-ng-repeat="subscription in subscriptions">
-				<a href="#/share-link/{{subscription.id}}"  class="share-button btn btn-linkslap" title="Share to {{subscription.stream.name}}">{{subscription.stream.name}}</a>
+				<a href="#/share-link/{{subscription.id}}"  class="share-button btn btn-linkslap" title="Share to {{subscription.stream.name}}">
+					{{subscription.stream.name}}
+				</a>
 				<button data-ng-click="openStream(subscription)" class="btn btn-linkslap" title="Open stream"><i class="glyphicon glyphicon-new-window" /></button>
 				<a href="#/settings/{{subscription.id}}" class="btn btn-linkslap" title="Edit stream"><i class="glyphicon glyphicon-cog" /></a>
 			</li>

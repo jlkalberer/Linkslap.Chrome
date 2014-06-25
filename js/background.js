@@ -5,8 +5,9 @@
 			rest.setBaseUrl(settings.baseUrl);
 		}]);
 
-	app.run(['$localStorage', 'Settings', 'Restangular', 'AccountService', 'Linkslap', function (store, settings, rest, account, linkslap) {
-		// Run this as it means Chrome is starting up...
-		storage.lastUpdated = moment.utc().format(settings.dateFormat);
+	// This will initialize link and set the browser
+	// TODO: use messaging so the browser will not need to be set to the window object.
+	app.run(['Link', 'Browser', function (link, browser) {
+		window.browser = browser;
 	}]);
 }());

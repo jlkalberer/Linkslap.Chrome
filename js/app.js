@@ -4,28 +4,22 @@
 	app.config(function ($routeProvider) {
 		$routeProvider
 			.when('/authenticate', {
-				'templateUrl' : 'includes/authenticate.html',
-				'controller' : 'AuthenticateCtrl'
+				'templateUrl' : 'includes/authenticate.html'
 			})
 			.when('/register', {
-				'templateUrl' : 'includes/register.html',
-				'controller' : 'RegisterCtrl'
+				'templateUrl' : 'includes/register.html'
 			})
 			.when('/new-stream', {
-				'templateUrl' : 'includes/new-stream.html',
-				'controller' : 'NewStreamCtrl'
+				'templateUrl' : 'includes/new-stream.html'
 			})
 			.when('/share-link/:subscriptionId', {
-				'templateUrl' : 'includes/share-link.html',
-				'controller' : 'ShareLinkCtrl'
+				'templateUrl' : 'includes/share-link.html'
 			})
 			.when('/settings/:subscriptionId', {
-				'templateUrl' : 'includes/subscription-settings.html',
-				'controller' : 'SubscriptionSettingsCtrl'
+				'templateUrl' : 'includes/subscription-settings.html'
 			})
 			.when('/', {
-				'templateUrl' : 'includes/listing.html',
-				'controller' : 'ListingCtrl'
+				'templateUrl' : 'includes/listing.html'
 			})
             .otherwise({
                 redirectTo: '/'

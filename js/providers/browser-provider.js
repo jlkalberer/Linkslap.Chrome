@@ -47,6 +47,25 @@ angular
 			};
 
 			openTab = function (link) {
+				// an array of links were sent to be opened.
+				if (_.isArray(link)) {
+					if (!currentWindow) {
+						var newLink = link.shift();
+						$windows.create({"url": newLink.url }, function (newWindow) {
+							currentWindow = newWindow;
+							resizeWindow();
+
+							setupTab(newLink, currentWindow.tabs[0]);
+							_(link).each(openTab);
+						});
+
+						return;
+					}
+					
+					_(link).each(openTab);
+					return;
+				}
+
 				if (currentWindow === null) {
 					$windows.create({"url": link.url }, function (newWindow) {
 						currentWindow = newWindow;
