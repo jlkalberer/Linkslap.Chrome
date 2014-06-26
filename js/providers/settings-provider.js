@@ -8,7 +8,7 @@
 			return self;
 		};
 		
-		this.baseUrl = 'http://linkslap2.azurewebsites.net/'
+		this.baseUrl = 'http://linkslap.me/'
 		//this.baseUrl = 'http://localhost:37459/';
 		this.dateFormat = "YYYY-MM-DDTHH:mm:ss.SSSZ";
 
