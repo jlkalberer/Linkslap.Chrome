@@ -10,12 +10,17 @@ angular.module('linkslap')
 
 	    var linkHub = new Hub('link', {
 		        'openLink': function (link) {
+		        	var acct = account.getAccount();
 		        	if (link.id && link.createdDate) {0
-		        		var acct = account.getAccount();
 
 		        		if (acct) {
 			        		storage[acct.id].lastUpdated = link.createdDate;
 		        		}
+		        	}
+
+		        	// Don't show it if from the same user
+		        	if (link.userName === acct.userName) {
+		        		return;
 		        	}
 
 		        	// TODO - add to notifications if the browser is idle
