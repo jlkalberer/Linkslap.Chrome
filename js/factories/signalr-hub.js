@@ -3,11 +3,11 @@ angular.module('linkslap')
 	.factory('Hub', ['$', '$timeout', 'Settings', function ($, $timeout, settings) {
 		//This will allow same connection to be used for all Hubs
 		//It also keeps connection as singleton.
-		var globalConnection = $.hubConnection(settings.baseUrl + "signalr");
-		$.connection.hub.disconnected(function() {
+		var reconnect = 30000, globalConnection = $.hubConnection(settings.baseUrl + "signalr");
+		globalConnection.disconnected(function() {
 		   $timeout(function() {
 		       location.reload();
-		   }, 5000); // Restart connection after 5 seconds.
+		   }, reconnect); // Restart connection after 5 seconds.
 		});
 
 		return function (hubName, listeners, methods) {
@@ -38,7 +38,10 @@ angular.module('linkslap')
 			
 			// Adding additional property of promise allows to access it in rest of the application.
 			Hub.promise = Hub.connection.start();	
-
+			Hub.promise.done(function () {
+				reconnect = 0; // Set this to zero so that it wont take 60 seconds to reload the plugin.
+			});
+			
 			return Hub;
 		};
 	}]);
