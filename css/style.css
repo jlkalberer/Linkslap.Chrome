@@ -1,3 +1,6 @@
+html {
+  overflow: hidden;
+}
 header {
   background:rgb(153,207,217);
   border-bottom:10px solid rgb(50,50,50);

@@ -153,7 +153,12 @@ angular.module('linkslap')
 	    	return Links.subscriptions;
 	    });
 	    browser.$on('subscriptions.getlinknotifications', function () {
-	    	var acct = account.getAccount()
+	    	var acct = account.getAccount();
+
+	    	if (!acct) {
+	    		return;
+	    	}
+	    	
 	    	return storage[acct.id].linkNotifications || [];
 	    });
 

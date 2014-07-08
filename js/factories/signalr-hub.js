@@ -6,7 +6,7 @@ angular.module('linkslap')
 		var globalConnection = $.hubConnection(settings.baseUrl + "signalr");
 		$.connection.hub.disconnected(function() {
 		   $timeout(function() {
-		       $.connection.hub.start();
+		       location.reload();
 		   }, 5000); // Restart connection after 5 seconds.
 		});
 
@@ -36,7 +36,7 @@ angular.module('linkslap')
 				});
 			}
 			
-			//Adding additional property of promise allows to access it in rest of the application.
+			// Adding additional property of promise allows to access it in rest of the application.
 			Hub.promise = Hub.connection.start();	
 
 			return Hub;
