@@ -246,6 +246,9 @@ angular
 			return { 
 				openTab: openTab,
 				openTabPage: openTabPage,
+				toast: function (type, message) {
+					$trigger("browser.sendtoast", {type: type, message: message});
+				},
 				$on: $on,
 				$trigger: $trigger
 			};

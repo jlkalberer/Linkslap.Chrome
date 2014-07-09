@@ -29,6 +29,8 @@
 							root.$emit('account.loggedin', response);
 							browser.$trigger('account.loggedin', response);
 
+							browser.toast('success', 'Successfully logged in');
+
 							return response;
 						});
 				},
@@ -36,6 +38,7 @@
 					storage.auth = null;
 					root.$emit('account.loggedout');
 		        	browser.$trigger('account.loggedout', null);
+					browser.toast('info', 'You have been logged out.');
 				},
 				getAccount: function () {
 					return storage.auth;

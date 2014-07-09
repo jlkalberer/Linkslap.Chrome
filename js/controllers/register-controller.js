@@ -1,5 +1,5 @@
 (function() {
-	var controller = function($scope, account, $location) {
+	var controller = function($scope, account, $location, browser) {
 		$scope.disableButton = false;
 		$scope.model = {};
 
@@ -9,6 +9,8 @@
 			var registration = account.register($scope.model);
 
 			registration.then(function () {
+				browser.toast('success', 'You have successfully registered.  You will receive a confirmation email shortly.');
+
 				$location.path('/authenticate');
 			}, function (response) {
 				$scope.disableButton = false;
@@ -30,5 +32,5 @@
 		};
 	};
 
-	angular.module('linkslap').controller("RegisterCtrl", [ '$scope', 'AccountService', '$location', controller ]);
+	angular.module('linkslap').controller("RegisterCtrl", [ '$scope', 'AccountService', '$location', 'Browser', controller ]);
 }());

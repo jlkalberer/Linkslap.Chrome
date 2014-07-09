@@ -4,11 +4,19 @@ angular.module('linkslap')
 		//This will allow same connection to be used for all Hubs
 		//It also keeps connection as singleton.
 		var reconnect = 30000, globalConnection = $.hubConnection(settings.baseUrl + "signalr");
-		globalConnection.disconnected(function() {
-		   $timeout(function() {
-		       location.reload();
-		       // globalConnection.start(); -- maybe add this instead of a refresh???
-		   }, reconnect); // Restart connection after 5 seconds.
+		globalConnection.stateChanged(function(stateChange) {
+			if (stateChange.newState !== $.signalR.connectionState.disconnected) {
+				return;
+			}
+
+			$timeout(function() {
+			   location.reload();
+			   // globalConnection.start(); -- maybe add this instead of a refresh???
+			}, reconnect); // Restart connection after 5 seconds.
+		});
+
+		globalConnection.error(function (a,b,c) {
+			var v = 0;
 		});
 
 		return function (hubName, listeners, methods) {

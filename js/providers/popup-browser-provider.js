@@ -3,6 +3,9 @@ angular
 	.provider('Browser', function () {
 		var output = null;
 
+		toastr.options.positionClass = "toast-top-full-width";
+		toastr.options.timeOut = 2500;
+
 		if (chrome) {
 			var $windows = chrome.windows,
 				$tabs = chrome.tabs,
@@ -104,6 +107,9 @@ angular
 						port.postMessage({eventName: eventName, data: data, eventId: eventId});
 
 						return defer.promise;
+					},
+					toast: function (type, message) {
+						toastr[type](message);
 					}
 				};
 
@@ -113,8 +119,8 @@ angular
 					output.openTabPage = background.browser.openTabPage;
 				}
 
-				output.$on("subscriptions.updated", function (values) {
-					var v = 0;
+				output.$on("browser.sendtoast", function (data) {
+					output.toast(data.type, data.message);
 				});
 
 				return output;

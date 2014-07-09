@@ -1,6 +1,6 @@
 (function() {
 	var app = angular.module("linkslap");
-
+		
 	app.provider('Settings',function () {
 		var self = this;
 		// At some point this may be filled with things that aren't constants..

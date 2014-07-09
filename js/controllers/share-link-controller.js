@@ -30,6 +30,8 @@
 			model.streamKey = $scope.subscription.stream.key;
 
 			rest.all('api/link').post(model).then(function (result) {
+				browser.toast('success', 'You have slapped a link to ' + $scope.subscription.stream.name + '.');
+
 				$location.path('/');
 			}, function (error) {
 				$scope.disableButton = false;
