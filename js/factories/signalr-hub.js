@@ -7,6 +7,7 @@ angular.module('linkslap')
 		globalConnection.disconnected(function() {
 		   $timeout(function() {
 		       location.reload();
+		       // globalConnection.start(); -- maybe add this instead of a refresh???
 		   }, reconnect); // Restart connection after 5 seconds.
 		});
 
