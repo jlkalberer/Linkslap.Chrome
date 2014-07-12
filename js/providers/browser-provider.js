@@ -8,7 +8,9 @@ angular
 			messageEvents = [],
 			$on = function (eventName, callback) {
 				messageEvents.push({eventName: eventName, callback: callback});
-			};
+			},
+			$trigger,
+			setBadge;
 
 		if (chrome) {
 			var $windows = chrome.windows,
@@ -229,6 +231,9 @@ angular
 				return output;
 			};
 
+			setBadge = function (val) {
+				chrome.browserAction.setBadgeText({text: val});
+			};
 			/*var port = chrome.runtime.connect({name: "linkslap"});
 			port.postMessage({joke: "Knock knock"});
 			port.onMessage.addListener(function(msg) {
@@ -250,7 +255,8 @@ angular
 					$trigger("browser.sendtoast", {type: type, message: message});
 				},
 				$on: $on,
-				$trigger: $trigger
+				$trigger: $trigger,
+				setBadge: setBadge
 			};
 		}];
 	});
