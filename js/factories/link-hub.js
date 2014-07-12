@@ -99,6 +99,17 @@ angular.module('linkslap')
 	    	deferred.resolve();
 	    });
 
+	    var setCount = function (storedNotifications) {
+	    	var count = 0;
+    		_(storedNotifications).each(function (subscriptionNotification) {
+    			count += subscriptionNotification.submittedLinks.length;
+    		});
+
+			if (count === 0) {
+				count = '';
+			}
+			browser.setBadge(count + '');
+	    };
 
 	    var onLogin = function (acct) {
 		    if (!acct) {
@@ -110,11 +121,11 @@ angular.module('linkslap')
 		    rest.all('api/subscription/sync-links')
 		    	.getList(model)
 		    	.then(function (response) {
+		    		var storedNotifications = storage[acct.id].linkNotifications || [];
 		    		if (!response || response.length == 0) {
+						setCount(storedNotifications);
 		    			return;
 		    		}
-
-		    		var storedNotifications = storage[acct.id].linkNotifications || [];
 
 		    		_(response).each(function (subscriptionNotification) {
 		    			var existing = _(storedNotifications).findWhere({streamKey: subscriptionNotification.streamKey})
@@ -136,6 +147,8 @@ angular.module('linkslap')
 		    		if (response[0]) {
 		    			storage[acct.id].lastUpdated = response[0].lastUpdated || storage[acct.id].lastUpdated;
 		    		}
+
+					setCount(storedNotifications);
 
 					storage[acct.id].linkNotifications = storedNotifications;
 
@@ -168,6 +181,8 @@ angular.module('linkslap')
 	    	storage[acct.id].linkNotifications = storedNotifications = _.without(storedNotifications, _.findWhere(storedNotifications, {streamKey: streamKey}));
 		    
 		    browser.$trigger('subscriptions.synclinks', storedNotifications);
+
+		    setCount(storedNotifications);
 
 		    return storedNotifications;
 	    });
