@@ -6,6 +6,9 @@
 			.when('/authenticate', {
 				'templateUrl' : 'includes/authenticate.html'
 			})
+			.when('/forgot-password', {
+				'templateUrl' : 'includes/forgot-password.html'
+			})
 			.when('/register', {
 				'templateUrl' : 'includes/register.html'
 			})
@@ -35,7 +38,8 @@
 		.run(['$rootScope', 'AccountService', '$location', function(root, auth, $location) {
 			auth.accountLoaded.then(function (value) {
 				root.$on( "$routeChangeStart", function(event, next, current) {
-					if (!auth.isAuthenticated() && next.$$route.originalPath !== '/register') {
+					var path = next.$$route.originalPath;
+					if (!auth.isAuthenticated() && path !== '/register' && path !== '/forgot-password') {
 						$location.path('/authenticate');
 					}
 				});
