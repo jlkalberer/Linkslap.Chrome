@@ -36,5 +36,14 @@ $(function() {
 
 			joinButton.hide();
 		})
-	})
+	});
+
+	$(".stream-link").on('click', function (event) {
+		event.preventDefault();
+		var link = $(this).data('link');
+
+		link.useCurrentWindow = true;
+
+		SendMessage("browser.opentab", link);
+	});
 });

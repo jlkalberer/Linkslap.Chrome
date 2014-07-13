@@ -68,7 +68,15 @@ angular
 					return;
 				}
 
-				if (currentWindow === null) {
+				if (link.useCurrentWindow) {
+					$windows.getLastFocused({}, function (window) {
+						$tabs.create({"windowId" : window.id, "url" : link.url }, function (tab) {
+							resizeWindow();
+
+							setupTab(link, tab);
+						});
+					});
+				} else if (currentWindow === null) {
 					$windows.create({"url": link.url }, function (newWindow) {
 						currentWindow = newWindow;
 						resizeWindow();
@@ -102,6 +110,8 @@ angular
 
 				return defer.promise;
 			});
+
+			$on("browser.opentab", openTab);
 
 			var messageHandler;
 
