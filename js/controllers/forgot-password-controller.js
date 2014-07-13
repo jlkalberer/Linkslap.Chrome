@@ -1,26 +1,37 @@
 (function() {
-	var controller = function($scope, account, $location) {
+	var controller = function($scope, $location, rest, browser) {
 		$scope.showSuccess = false;
 		$scope.disableButton = false;
 
 		$scope.submitForm = function () {
-			$scope.showSuccess = true;
 			$scope.disableButton = true;
 			
-			return;
+			rest.one("api/account")
+				.customPOST({ email : $scope.email }, 'resetpassword')
+				.then(function (result) {
+					$scope.errorMessage = [];
+					$scope.showSuccess = true;
+					// Go to listing view - successfully authenticated
+					// browser.toast('success', 'You have requested a password reset.  You will receive an email with instructions shortly.');
+					// $location.path("/");
+				}, function (error) {
+					$scope.disableButton = false;
+					var output = error.data;
+					$scope.errorMessage = [];
 
-			var authorization = account.login({ userName : $scope.userName, password : $scope.password });
+					if (output.Message) {
+						$scope.errorMessage.push(output.Message);
+					}
 
-			authorization.then(function () {
-				// Go to listing view - successfully authenticated
-				$location.path("/");
-			}, function (response) {
-				$scope.disableButton = false;
-				$scope.errorMessage = response.data.error_description;
-			});
-
+					for (var key in output.ModelState) {
+						var item = output.ModelState[key];
+						for (var i = 0; i < item.length; i += 1) {
+							$scope.errorMessage.push(item[i]);
+						}
+					}
+				});
 		};
 	};
 
-	angular.module('linkslap').controller("ForgotPasswordCtrl", [ '$scope', 'AccountService', '$location', controller ]);
+	angular.module('linkslap').controller("ForgotPasswordCtrl", [ '$scope', '$location', 'Restangular', 'Browser', controller ]);
 }());

@@ -115,6 +115,13 @@ angular
 
 				if (chrome.extension.getBackgroundPage) {
 					var background = chrome.extension.getBackgroundPage();
+
+					// When the computer goes to sleep the browser may not be set for some reason
+					// This is a fix until that bug is tracked down
+					if (!background.browser) {
+						background.location.reload(true);
+					}
+
 					output.openTab = background.browser.openTab;
 					output.openTabPage = background.browser.openTabPage;
 				}
