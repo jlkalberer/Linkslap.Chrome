@@ -10,7 +10,7 @@ $(function() {
 		.on("click", function() {
 			var feed = $(this).find(".join-feed-hidden-field");
 			
-			if (!feed.length) {
+			if (!feed || !feed.length) {
 				return;
 			}
 			
