@@ -8,12 +8,7 @@
 		$scope.results = [];
 
 		$scope.searchGif = function (page) {
-			page = page || 0;
-			if (page === $scope.currentPage && $scope.results.length) {
-				return;
-			}
-
-			$scope.currentPage = page;
+			$scope.currentPage = page || 0;
 
 			if (!$scope.search) {
 				$scope.pageCount = [];

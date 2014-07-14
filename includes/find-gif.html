@@ -7,7 +7,9 @@
 			</div>
 		</form>
 		<div class="row gif-row">
-			<a data-ng-repeat="i in pageCount" href="#" data-ng-click="$event.preventDefault();searchGif($index)" class="btn btn-linkslap" data-ng-class="{'disabled' : $index === currentPage}">{{$index + 1}}</a>
+			<div class="col-xs-12">
+				<a data-ng-repeat="i in pageCount" href="#" data-ng-click="$event.preventDefault();searchGif($index)" class="btn btn-linkslap" data-ng-class="{'disabled' : $index === currentPage}">{{$index + 1}}</a>
+			</div>
 		</div>
 		<div class="row gif-row" data-ng-repeat="row in results">
 			<div class="col-xs-6" data-ng-repeat="result in row" >
@@ -17,7 +19,9 @@
 			</div>
 		</div>
 		<div class="row">
-			<a data-ng-repeat="i in pageCount" href="#" data-ng-click="$event.preventDefault();searchGif($index)" class="btn btn-linkslap" data-ng-class="{'disabled' : $index === currentPage}">{{$index + 1}}</a>
+			<div class="col-xs-12">
+				<a data-ng-repeat="i in pageCount" href="#" data-ng-click="$event.preventDefault();searchGif($index)" class="btn btn-linkslap" data-ng-class="{'disabled' : $index === currentPage}">{{$index + 1}}</a>
+			</div>
 		</div>
 	</div>
 </div>
