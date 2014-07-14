@@ -4,9 +4,18 @@
 		browser.$trigger('subscriptions.get').then(function (values) {
 			$scope.subscription = _.where(values, {id: parseInt($routeParams.subscriptionId)})[0];
 		});
-		browser.$trigger('browser.pagedetails').then(function(value) {
-			$scope.model = value;
-		});
+
+		if ($routeParams.url) {
+			$scope.model = {
+				url: $routeParams.url,
+				comment: $routeParams.comment
+			};
+		} else {
+			browser.$trigger('browser.pagedetails').then(function(value) {
+				$scope.model = value;
+			});			
+		}
+
 		var userName = '';
 		browser.$trigger('account.getaccount').then(function(value) {
 			userName = value.userName;

@@ -15,8 +15,11 @@
 			.when('/new-stream', {
 				'templateUrl' : 'includes/new-stream.html'
 			})
-			.when('/share-link/:subscriptionId', {
+			.when('/share-link/:subscriptionId/:url?', {
 				'templateUrl' : 'includes/share-link.html'
+			})
+			.when('/find-gif/:subscriptionId', {
+				'templateUrl' : 'includes/find-gif.html'
 			})
 			.when('/settings/:subscriptionId', {
 				'templateUrl' : 'includes/subscription-settings.html'
@@ -54,4 +57,7 @@
 	    $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|chrome-extension):/);
   	});
 
+	app.filter('escape', function() {
+	  return window.escape;
+	});
 }());

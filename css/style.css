@@ -78,5 +78,17 @@ header {
   color: rgb(50,50,50);
 }
 .share-button {
-  width:290px;
+  width:250px;
 }
+.gif-icon {
+  display: block;
+}
+.gif-row {
+  padding-bottom: 10px;
+}
+  .gif-row div:nth-child(1) {
+    padding-right:7px;
+  }
+  .gif-row div:nth-child(2) {
+    padding-left:7px;
+  }
