@@ -1,27 +1,29 @@
 (function() {
 	var controller = function($scope, $routeParams) {
-		var request = null;
+		var xhr = null;
 		$scope.subscriptionId = $routeParams.subscriptionId;
 		$scope.search = '';
 		$scope.pageCount = [];
 		$scope.currentPage = 0;
 		$scope.results = [];
+		$scope.searching = false;
 
 		$scope.searchGif = function (page) {
 			$scope.currentPage = page || 0;
+			$scope.results = [];
+			$scope.searching = true;
 
 			if (!$scope.search) {
 				$scope.pageCount = [];
-				$scope.results = [];
 				return;
 			}
 
-			if (request) {
-				request.abort();
-				request = null;
+			if (xhr && xhr.abort) {
+				xhr.abort();
+				xhr = null;
 			}
 
-			request = $.get('http://gifme.io/search/q?query=' + $scope.search + "&page=" + $scope.currentPage).then(function (result) {
+			xhr = $.get('http://gifme.io/search/q?query=' + $scope.search + "&page=" + $scope.currentPage).then(function (result) {
 				$scope.$apply(function () {
 				    var allItems =  $(result).find('#results-area a').map(function (index, el) {
 				        return {
@@ -42,9 +44,11 @@
 				    		group = [];
 				    	}
 				    }
+
+					$scope.searching = false;
 				});
 				
-				request = null;
+				xhr = null;
 			});
 		};
 

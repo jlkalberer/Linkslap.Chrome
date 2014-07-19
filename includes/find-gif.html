@@ -6,21 +6,30 @@
 				<input type="search" class="form-control" placeholder="Search gif" data-ng-model="search" ng-model-options="{debounce: 500}">
 			</div>
 		</form>
-		<div class="row gif-row">
+		<div data-ng-show="search && results && !results.length && !searching" class="row">
 			<div class="col-xs-12">
-				<a data-ng-repeat="i in pageCount" href="#" data-ng-click="$event.preventDefault();searchGif($index)" class="btn btn-linkslap" data-ng-class="{'disabled' : $index === currentPage}">{{$index + 1}}</a>
+				We couldn't find any gifs for your keywords.
 			</div>
 		</div>
-		<div class="row gif-row" data-ng-repeat="row in results">
-			<div class="col-xs-6" data-ng-repeat="result in row" >
-				<a href="#/share-link/{{subscriptionId}}?url={{result.image | escape}}&comment={{search | escape}}" class="gif-icon" data-ng-init="image = result.thumb" data-ng-mouseenter="image = result.image" data-ng-mouseleave="image = result.thumb">
-					<img class="img-responsive" data-ng-src="{{image}}" />
-				</a>
+		<div data-ng-show="results && results.length">
+			<div class="row gif-row">
+				<div class="col-xs-12">
+					<a data-ng-repeat="i in pageCount" href="#" data-ng-click="$event.preventDefault();searchGif($index)" class="btn btn-linkslap" data-ng-class="{'disabled' : $index === currentPage}">{{$index + 1}}</a>
+				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-12">
-				<a data-ng-repeat="i in pageCount" href="#" data-ng-click="$event.preventDefault();searchGif($index)" class="btn btn-linkslap" data-ng-class="{'disabled' : $index === currentPage}">{{$index + 1}}</a>
+			<div class="row gif-row" data-ng-repeat="row in results">
+				<div class="col-xs-6" data-ng-repeat="result in row" >
+					<a href="#/share-link/{{subscriptionId}}?url={{result.image | escape}}&comment={{search | escape}}" class="gif-icon" data-ng-init="showGif = false; loaded = false;" data-ng-mouseenter="showGif = true; image=result.image;" data-ng-mouseleave="showGif = false">
+						<img class="img-responsive" data-ng-hide="showGif && loaded" data-ng-src="{{result.thumb}}" />
+						<img class="img-responsive" data-ng-show="showGif && loaded" data-ng-src="{{image}}" data-imageonload="loaded = true" />
+						<div class="loader" data-ng-show="image && !loaded"></div>
+					</a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<a data-ng-repeat="i in pageCount" href="#" data-ng-click="$event.preventDefault();searchGif($index)" class="btn btn-linkslap" data-ng-class="{'disabled' : $index === currentPage}">{{$index + 1}}</a>
+				</div>
 			</div>
 		</div>
 	</div>

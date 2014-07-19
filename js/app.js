@@ -60,4 +60,19 @@
 	app.filter('escape', function() {
 	  return window.escape;
 	});
+
+	app.directive('imageonload', ['$parse', function($parse) {
+	    return {
+	        restrict: 'A',
+	        link: function(scope, element, attrs) {
+	        	var expressionHandler = $parse(attrs.imageonload);
+	            element.bind('load', function (event, data) {
+                    scope.$apply(function() {
+                        event.preventDefault();
+		                expressionHandler(scope, {$event:event});
+		            });
+                })
+	        }
+	    };
+	}]);
 }());

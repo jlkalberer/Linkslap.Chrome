@@ -211,7 +211,7 @@ angular.module('linkslap')
 	    	}
 
     		_.each(Links.subscriptions, function (sub) {
-    			linkHub.unsubscribe(sub.streamId);
+    			linkHub.unsubscribe(sub.stream.key);
     		});
 	    });
 

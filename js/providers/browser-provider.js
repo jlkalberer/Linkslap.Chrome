@@ -40,7 +40,7 @@ angular
 			var setupTab = function (link, tab) {
 				var tabId = tab.id;
 
-				var script = "var linkModel='" + $.param(link) + "'";
+				var script = 'var linkModel="' + $.param(link) + '";';
 				$tabs.executeScript(tabId, { "code" : script, "runAt" : "document_start" }, function() {
 					$tabs.executeScript(tabId, { "file": "/js/vendor/jquery-2.1.1.min.js", "runAt" : "document_start"}, function() {
 						$tabs.executeScript(tabId, { "file": "/js/header.js", "runAt" : "document_start" });
