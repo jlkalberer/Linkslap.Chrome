@@ -1,5 +1,5 @@
 (function() {
-	var controller = function($scope, $routeParams, rest) {
+	var controller = function($scope, $routeParams, rest, $analytics) {
 		var xhr = null;
 		$scope.subscriptionId = $routeParams.subscriptionId;
 		$scope.search = '';
@@ -17,6 +17,8 @@
 				$scope.pageCount = [];
 				return;
 			}
+
+			$analytics.eventTrack('gif-search', { category: $scope.subscriptionId, label: $scope.search })
 
 			rest.oneUrl('search', 'http://api.gifme.io/v1/search')
 				.get({ key: 'rX7kbMzkGu7WJwvG', query: $scope.search, page: $scope.currentPage, limit: 20, sfw: !$scope.nsfw })
@@ -42,5 +44,5 @@
 		$scope.$watch('search', function () { $scope.searchGif(); });
 	};
 
-	angular.module('linkslap').controller("FindGifCtrl", [ '$scope', '$routeParams', 'Restangular', controller ]);
+	angular.module('linkslap').controller("FindGifCtrl", [ '$scope', '$routeParams', 'Restangular', '$analytics', controller ]);
 }());

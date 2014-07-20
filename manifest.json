@@ -3,7 +3,7 @@
 
 	"name": "Linkslap [Beta]",
 	"description": "Instantly share pics or pages with your friends!",
-	"version": "0.3.6",
+	"version": "0.3.8",
 
 	"browser_action": {
 		"default_icon": {
@@ -35,7 +35,7 @@
 		"idle",
 		"notifications"
 	],
-	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+	"content_security_policy": "script-src 'self' 'unsafe-eval' https://www.google-analytics.com; object-src 'self'",
 	"incognito" : "spanning",
 	"key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC42mC/DRu5hGknoEQuYcJnTp1jNJ4XV7tetvvgwNvWI9ZFKJYdu0vcowTsrmrKxgABY8sU2SA4irPD51eB1/9DMXVZ348E5Qh+nuW/izrI0CVjNAmG5xOAzrGr6KzEIWLQgrboBBA25xthHzWGPna9qVjprOWUWxfdDiMBEMGt7QIDAQAB",
 	"web_accessible_resources": [ "header.html", "/css/header.css" ]
