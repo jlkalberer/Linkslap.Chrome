@@ -18,7 +18,7 @@
 				return;
 			}
 
-			$analytics.eventTrack('gif-search', { category: $scope.subscriptionId, label: $scope.search })
+			$analytics.eventTrack('Gif Search', { category: $scope.subscriptionId, label: $scope.search })
 
 			rest.oneUrl('search', 'http://api.gifme.io/v1/search')
 				.get({ key: 'MNfCaCC9tRAr3yzf', query: $scope.search, page: $scope.currentPage, limit: 20, sfw: !$scope.nsfw })

@@ -100,3 +100,8 @@ header {
   height: 100%;
   background: rgba(255,255,255, .5) url('../img/ajax-loader.gif') 50% 50% no-repeat;
 }
+
+#gifMe img {
+  width:80px;
+  margin-top: -5px;
+}

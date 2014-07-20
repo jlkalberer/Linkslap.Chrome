@@ -1,6 +1,7 @@
 <div data-ng-controller="FindGifCtrl as find" class="row">
 	<div class="col-xs-12">
-		<h4>Search for Gifs</h4>
+		<h4>Search for Gifs from <a id="gifMe" href="http://gifme.io" target="_blank"><img src="img/gifme_logo.png"/></a></h4>
+
 		<form class="navbar-form navbar-left" role="search">
 			<div class="form-group">
 				<input type="search" class="form-control" placeholder="Search gif" data-ng-model="search" ng-model-options="{debounce: 500}">
@@ -10,6 +11,7 @@
 					<input type="checkbox" data-ng-model="nsfw" data-ng-change="searchGif()"> Include NSFW images
 				</label>
 			</div>
+			<a href="#/">back</a>
 		</form>
 		<div data-ng-show="search && results && !results.length && !searching" class="row">
 			<div class="col-xs-12">
@@ -28,7 +30,7 @@
 			</div>
 			<div class="row gif-row" data-ng-repeat="row in results">
 				<div class="col-xs-6" data-ng-repeat="result in row" >
-					<a href="#/share-link/{{subscriptionId}}?url={{result.link | escape}}&comment={{search | escape}}" class="gif-icon" data-ng-init="showGif = false; loaded = false;" data-ng-mouseenter="showGif = true; image=result.link;" data-ng-mouseleave="showGif = false">
+					<a href="#/share-link/{{subscriptionId}}?url={{result.link | escape}}&comment={{search | escape}}" class="gif-icon" data-ng-init="showGif = false; loaded = false;" data-ng-mouseenter="showGif = true; image=result.link;" data-ng-mouseleave="showGif = false" data-analytics-on="click" data-analytics-event="Gif Select" analytics-category="{{subscriptionId}}" data-analytics-label="{{result.link}}">
 						<img class="img-responsive" data-ng-hide="showGif && loaded" data-ng-src="{{result.thumb}}" />
 						<img class="img-responsive" data-ng-show="showGif && loaded" data-ng-src="{{image}}" data-imageonload="loaded = true" />
 						<div class="loader" data-ng-show="image && !loaded"></div>
