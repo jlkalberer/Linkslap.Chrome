@@ -1,5 +1,5 @@
 (function() {
-	var app = angular.module("linkslap", [ 'ngRoute', 'restangular' ]);
+	var app = angular.module("linkslap", [ 'ngRoute', 'restangular', 'angulartics', 'angulartics.google.analytics' ]);
 	
 	app.config(function ($routeProvider) {
 		$routeProvider
