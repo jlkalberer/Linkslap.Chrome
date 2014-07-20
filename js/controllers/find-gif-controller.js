@@ -1,5 +1,5 @@
 (function() {
-	var controller = function($scope, $routeParams) {
+	var controller = function($scope, $routeParams, rest) {
 		var xhr = null;
 		$scope.subscriptionId = $routeParams.subscriptionId;
 		$scope.search = '';
@@ -18,23 +18,13 @@
 				return;
 			}
 
-			if (xhr && xhr.abort) {
-				xhr.abort();
-				xhr = null;
-			}
+			rest.oneUrl('search', 'http://api.gifme.io/v1/search')
+				.get({ key: 'rX7kbMzkGu7WJwvG', query: $scope.search, page: $scope.currentPage, limit: 20, sfw: !$scope.nsfw })
+				.then(function (result) {
+					$scope.pageCount = _.range(0, result.meta.total_pages);
+					var allItems = result.data;
 
-			xhr = $.get('http://gifme.io/search/q?query=' + $scope.search + "&page=" + $scope.currentPage).then(function (result) {
-				$scope.$apply(function () {
-				    var allItems =  $(result).find('#results-area a').map(function (index, el) {
-				        return {
-				            thumb : $(el).data('static'),
-				            image : $(el).data('image')
-				        };
-				    });
-
-				    $scope.pageCount = _.range(0, $(result).find('.page-button').length);
-
-				    $scope.results = [];
+					$scope.results = [];
 				    var group = [];
 
 				    for (var i = 0; i < allItems.length; i += 1) {
@@ -47,13 +37,10 @@
 
 					$scope.searching = false;
 				});
-				
-				xhr = null;
-			});
 		};
 
 		$scope.$watch('search', function () { $scope.searchGif(); });
 	};
 
-	angular.module('linkslap').controller("FindGifCtrl", [ '$scope', '$routeParams', controller ]);
+	angular.module('linkslap').controller("FindGifCtrl", [ '$scope', '$routeParams', 'Restangular', controller ]);
 }());

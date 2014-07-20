@@ -163,6 +163,10 @@ angular.module('linkslap')
 	    		return null;
 	    	}
 
+	    	if (Links.subscriptions.length === 0) {
+	    		Links.updateSubscriptions();
+	    	}
+
 	    	return Links.subscriptions;
 	    });
 	    browser.$on('subscriptions.getlinknotifications', function () {
