@@ -19,7 +19,7 @@
 			</div>
 		</div>
 		<div data-ng-show="results && results.length">
-			<div data-ng-show="pageCount.length" class="row">
+			<div data-ng-show="pageCount.length > 1" class="row">
 				<div class="col-xs-12">
 					<ul class="pagination pagination-sm">
 						<li data-ng-repeat="i in pageCount" data-ng-class="{'active' : $index === currentPage}">
@@ -37,7 +37,7 @@
 					</a>
 				</div>
 			</div>
-			<div data-ng-show="pageCount.length" class="row">
+			<div data-ng-show="pageCount.length > 1" class="row">
 				<div class="col-xs-12">
 					<ul class="pagination pagination-sm">
 						<li data-ng-repeat="i in pageCount" data-ng-class="{'active' : $index === currentPage}">
