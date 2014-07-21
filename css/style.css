@@ -1,6 +1,7 @@
 html {
   overflow: hidden;
 }
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 header {
   background:rgb(153,207,217);
   border-bottom:10px solid rgb(50,50,50);
@@ -101,7 +102,7 @@ header {
   background: rgba(255,255,255, .5) url('../img/ajax-loader.gif') 50% 50% no-repeat;
 }
 
-#gifMe img {
+#giphy {
   width:80px;
   margin-top: -5px;
 }

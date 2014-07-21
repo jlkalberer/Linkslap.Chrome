@@ -4,12 +4,13 @@
 		$scope.subscriptionId = $routeParams.subscriptionId;
 		$scope.search = '';
 		$scope.pageCount = [];
-		$scope.currentPage = 0;
+		$scope.currentPage = 1;
+		$scope.limit = 20;
 		$scope.results = [];
 		$scope.searching = false;
+		$scope.totalCount = 0;
 
-		$scope.searchGif = function (page) {
-			$scope.currentPage = page || 0;
+		$scope.searchGif = function () {
 			$scope.results = [];
 			$scope.searching = true;
 
@@ -20,10 +21,12 @@
 
 			$analytics.eventTrack('Gif Search', { category: $scope.subscriptionId, label: $scope.search })
 
-			rest.oneUrl('search', 'http://api.gifme.io/v1/search')
-				.get({ key: 'MNfCaCC9tRAr3yzf', query: $scope.search, page: $scope.currentPage, limit: 20, sfw: !$scope.nsfw })
+			rest.oneUrl('search', 'http://api.giphy.com/v1/gifs/search')
+				.get({ api_key: 'dc6zaTOxFJmzC', q: $scope.search, offset: ($scope.currentPage - 1) * $scope.limit, limit: $scope.limit })
 				.then(function (result) {
-					$scope.pageCount = _.range(0, result.meta.total_pages);
+					var pagination = result.pagination;
+					$scope.totalCount = pagination.total_count;
+					$scope.pageCount = pagination.total_count / $scope.limit;
 					var allItems = result.data;
 
 					$scope.results = [];
@@ -41,7 +44,7 @@
 				});
 		};
 
-		$scope.$watch('search', function () { $scope.searchGif(); });
+		$scope.$watch('search', function () { $scope.currentPage = 1; $scope.searchGif(); });
 	};
 
 	angular.module('linkslap').controller("FindGifCtrl", [ '$scope', '$routeParams', 'Restangular', '$analytics', controller ]);
