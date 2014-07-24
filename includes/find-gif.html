@@ -1,13 +1,18 @@
 <div data-ng-controller="FindGifCtrl as find" class="row">
 	<div class="col-xs-12">
 		<div class="clearfix">
-			<img id="giphy" class="pull-right" src="img/giphy.gif" />
+			<img id="giphy" class="pull-right" src="img/gifme.png" />
 			<h4 class="pull-left">Search for Gifs</h4>
 		</div>
 		<form class="navbar-form navbar-left" role="search">
 			<div class="form-group">
 				<input type="search" class="form-control" placeholder="Search gif" data-ng-model="search" ng-model-options="{debounce: 500}">
 			</div>
+			<div class="checkbox">
+	        <label>
+	          <input type="checkbox" data-ng-model="nsfw" data-ng-change="searchGif()"> Include NSFW gifs
+	        </label>
+	      </div>
 			<a href="#/">back</a>
 		</form>
 		<div data-ng-show="search && results && !results.length && !searching" class="row">
@@ -21,10 +26,19 @@
 					<pagination total-items="totalCount" items-per-page="limit" ng-model="currentPage" max-size="6" class="pagination-sm" boundary-links="true" rotate="true" previous-text="&laquo;" next-text="&raquo;" ng-change="searchGif()"></pagination>
 				</div>
 			</div>
-			<div class="row gif-row" data-ng-repeat="row in results">
+			<!--<div class="row gif-row" data-ng-repeat="row in results">
 				<div class="col-xs-6" data-ng-repeat="result in row" >
 					<a href="#/share-link/{{subscriptionId}}?url={{result.images.original.url | escape}}&comment={{search | escape}}" class="gif-icon" data-ng-init="showGif = false; loaded = false;" data-ng-mouseenter="showGif = true; image=result.images.fixed_height.url;" data-ng-mouseleave="showGif = false" data-analytics-on="click" data-analytics-event="Gif Select" analytics-category="{{subscriptionId}}" data-analytics-label="{{result.images.original.url}}">
 						<img class="img-responsive" data-ng-hide="showGif && loaded" data-ng-src="{{result.images.fixed_height_still.url}}" />
+						<img class="img-responsive" data-ng-show="showGif && loaded" data-ng-src="{{image}}" data-imageonload="loaded = true" />
+						<div class="loader" data-ng-show="image && !loaded"></div>
+					</a>
+				</div>
+			</div>-->
+			<div class="row gif-row" data-ng-repeat="row in results">
+				<div class="col-xs-6" data-ng-repeat="result in row" >
+					<a href="#/share-link/{{subscriptionId}}?url={{result.link | escape}}&comment={{search | escape}}" class="gif-icon" data-ng-init="showGif = false; loaded = false;" data-ng-mouseenter="showGif = true; image=result.link;" data-ng-mouseleave="showGif = false" data-analytics-on="click" data-analytics-event="Gif Select" analytics-category="{{subscriptionId}}" data-analytics-label="{{result.link}}">
+						<img class="img-responsive" data-ng-hide="showGif && loaded" data-ng-src="{{result.thumb}}" />
 						<img class="img-responsive" data-ng-show="showGif && loaded" data-ng-src="{{image}}" data-imageonload="loaded = true" />
 						<div class="loader" data-ng-show="image && !loaded"></div>
 					</a>
