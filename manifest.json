@@ -1,9 +1,9 @@
 {
 	"manifest_version": 2,
 
-	"name": "Linkslap [Beta]",
+	"name": "Linkslap",
 	"description": "Instantly share pics or pages with your friends!",
-	"version": "0.3.12",
+	"version": "0.3.13",
 
 	"browser_action": {
 		"default_icon": {
