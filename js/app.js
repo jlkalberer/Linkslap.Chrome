@@ -21,7 +21,10 @@
 			.when('/find-gif/:subscriptionId', {
 				'templateUrl' : 'includes/find-gif.html'
 			})
-			.when('/settings/:subscriptionId', {
+			.when('/stream/:streamKey', {
+				'templateUrl' : 'includes/stream.html'
+			})
+			.when('/settings', {
 				'templateUrl' : 'includes/subscription-settings.html'
 			})
 			.when('/', {

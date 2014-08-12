@@ -14,17 +14,21 @@
 	<div class="col-xs-12">
 		<h4>Streams</h4>
 		<ul class="list-group">
-			<li class="btn-group" data-ng-repeat="subscription in subscriptions">
+			<li class="btn-group listing-group" data-ng-repeat="subscription in subscriptions">
 				<a href="#/share-link/{{subscription.id}}"  class="share-button btn btn-linkslap" title="Share to {{subscription.stream.name}}">
 					{{subscription.stream.name}}
 				</a>
 				<a href="#/find-gif/{{subscription.id}}" class="btn btn-linkslap" title="Find gif on GifMe"><i class="glyphicon glyphicon-search" /></a>
-				<button data-ng-click="openStream(subscription)" class="btn btn-linkslap" title="Open stream"><i class="glyphicon glyphicon-new-window" /></button>
-				<a href="#/settings/{{subscription.id}}" class="btn btn-linkslap" title="Edit stream"><i class="glyphicon glyphicon-cog" /></a>
+				<a href="#/stream/{{subscription.stream.key}}?streamName={{subscription.stream.name}}" class="btn btn-linkslap" title="View stream"><i class="glyphicon glyphicon-list" /></a>
+				<!--<button data-ng-click="openStream(subscription)" class="btn btn-linkslap" title="View stream"><i class="glyphicon glyphicon-list" /></button>
+				<a href="#/settings/{{subscription.id}}" class="btn btn-linkslap" title="Edit stream"><i class="glyphicon glyphicon-cog" /></a>-->
 			</li>
 		</ul>
 	</div>
 	<div class="col-xs-12 text-right">
-		<a href="#/new-stream" class="btn btn-linkslap">New Stream</a>
+		<div class="btn-group">
+			<a href="#/new-stream" class="btn btn-linkslap">New Stream</a>
+			<a href="#/settings" class="btn btn-linkslap" title="Settings"><i class="glyphicon glyphicon-cog" /></a>
+		</div>
 	</div>
 </div>
