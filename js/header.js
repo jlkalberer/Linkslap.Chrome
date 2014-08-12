@@ -1,3 +1,6 @@
+(function(h){h.deparam=function(i,j){var d={},k={"true":!0,"false":!1,"null":null};h.each(i.replace(/\+/g," ").split("&"),function(i,l){var m;var a=l.split("="),c=decodeURIComponent(a[0]),g=d,f=0,b=c.split("]["),e=b.length-1;/\[/.test(b[0])&&/\]$/.test(b[e])?(b[e]=b[e].replace(/\]$/,""),b=b.shift().split("[").concat(b),e=b.length-1):e=0;if(2===a.length)if(a=decodeURIComponent(a[1]),j&&(a=a&&!isNaN(a)?+a:"undefined"===a?void 0:void 0!==k[a]?k[a]:a),e)for(;f<=e;f++)c=""===b[f]?g.length:b[f],m=g[c]=
+f<e?g[c]||(b[f+1]&&isNaN(b[f+1])?{}:[]):a,g=m;else h.isArray(d[c])?d[c].push(a):d[c]=void 0!==d[c]?[d[c],a]:a;else c&&(d[c]=j?void 0:"")});return d}})(jQuery);
+
 jQuery(function() {
 	var $ = jQuery;
 
@@ -17,6 +20,10 @@ jQuery(function() {
 	});
 	iframe.attr("src", chrome.extension.getURL("/header.html?" + linkModel));
 	var body = $("body").append(iframe);
+
+
+	var link = $.deparam(linkModel);
+	document.title = link.comment;
 
 	iframe.load(function() {
 	    setTimeout(function() {

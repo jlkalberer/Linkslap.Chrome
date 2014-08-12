@@ -1,5 +1,5 @@
 (function() {
-	var controller = function($scope, $routeParams, $location, settings, browser, rest) {
+	var controller = function($scope, $routeParams, $filter, $location, settings, browser, rest) {
 		$scope.disableButton = false;
 		browser.$trigger('subscriptions.get').then(function (values) {
 			$scope.subscription = _.where(values, {id: parseInt($routeParams.subscriptionId)})[0];
@@ -10,11 +10,27 @@
 				url: $routeParams.url,
 				comment: $routeParams.comment
 			};
+
+			if (checkURL($scope.model.url)) {
+				$scope.imageUrl = $scope.model.url;
+			}
+
+			$scope.cancelUrl = '#/find-gif/' + $routeParams.subscriptionId + '?query=' + $filter('escape')($routeParams.comment);
 		} else {
 			browser.$trigger('browser.pagedetails').then(function(value) {
 				$scope.model = value;
+
+				if (checkURL($scope.model.url)) {
+					$scope.imageUrl = $scope.model.url;
+				}
 			});			
 		}
+
+		function checkURL(url) {
+		    return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+		}
+
+		
 
 		var userName = '';
 		browser.$trigger('account.getaccount').then(function(value) {
@@ -28,7 +44,9 @@
 			model.userName = userName;
 			model.createdDate = moment().format(settings.dateFormat);
 			model.streamName = $scope.subscription.stream.name;
-			
+			model.useCurrentWindow = true;
+			model.isPreview = true;
+
 			browser.openTab(model);
 		};
 
@@ -38,7 +56,7 @@
 			var model = $scope.model;
 			model.streamKey = $scope.subscription.stream.key;
 
-			rest.all('api/link').post(model).then(function (result) {
+			browser.$trigger('links.send', model).then(function (result) {
 				browser.toast('success', 'You have slapped a link to ' + $scope.subscription.stream.name + '.');
 
 				$location.path('/');
@@ -57,5 +75,5 @@
 		};
 	};
 
-	angular.module('linkslap').controller("ShareLinkCtrl", [ '$scope', '$routeParams', '$location', 'Settings', 'Browser', 'Restangular', controller ]);
+	angular.module('linkslap').controller("ShareLinkCtrl", [ '$scope', '$routeParams', '$filter', '$location', 'Settings', 'Browser', 'Restangular', controller ]);
 }());

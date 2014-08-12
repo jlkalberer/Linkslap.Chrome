@@ -4,13 +4,14 @@
 		<div class="alert alert-danger" data-ng-if="errorMessage && errorMessage.length">
 			<p data-ng-repeat="error in errorMessage">{{error}}</p>
 		</div>
+		<img class="share-img-preview img-responsive" data-ng-if="imageUrl" data-ng-src="{{imageUrl}}" />
 		<div class="form-group">
 			<a href="#" class="pull-right" data-ng-click="preview($event)">Preview</a>
 			<label for="linkText" class="control-label">Title</label>
-			<textarea class="form-control" id="linkText" placeholder="Enter link title" data-ng-model="model.comment" rows="4"></textarea>
+			<textarea data-focus="true" class="form-control" id="linkText" placeholder="Enter link title" data-ng-model="model.comment" rows="4"></textarea>
 		</div>
 		<div class="form-group">
-			<a href="#/">Cancel</a>
+			<a href="{{cancelUrl || '#/'}}">Cancel</a>
 			<button class="btn btn-lg btn-linkslap pull-right" type="submit" data-ng-disabled="disableButton">Share Link</button>
 		</div>
 	</form>

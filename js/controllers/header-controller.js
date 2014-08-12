@@ -11,14 +11,19 @@
 	    return vars;
 	}
 
-	var controller = function($scope, account, settings) {
+	var controller = function($scope, browser, settings) {
 		// TODO - Allow upvoting by grabbing account.  Need communication to background app.
 		// $scope.account = account.getAccount();
+		$scope.link = $.deparam(window.location.href.slice(window.location.href.indexOf('?') + 1));
 
-		$scope.link = getUrlVars();
+		$scope.share = function () {
+			$scope.link.closeTab = true;
+			browser.$trigger('links.send', $scope.link);
+		};
+
 		$scope.link.url = settings.baseUrl + 's/' + $scope.link.streamKey;
 		$scope.link.createdDate = moment($scope.link.createdDate, settings.dateFormat).format("M/D/YYYY h:mm a");
 	};
 
-	angular.module('linkslap').controller("HeaderCtrl", [ '$scope', 'AccountService', 'Settings', controller ]);
+	angular.module('linkslap').controller("HeaderCtrl", [ '$scope', 'Browser', 'Settings', controller ]);
 }());

@@ -158,6 +158,14 @@ angular.module('linkslap')
 
 	    onLogin(account.getAccount());
 
+	    browser.$on('links.send', function (model) {
+	    	if (model.closeTab) {
+		    	browser.closeTab();
+	    	}
+
+			return rest.all('api/link').post(model);
+	    });
+
 	    browser.$on('subscriptions.get', function () {
 	    	if (!Links.subscriptions) {
 	    		return null;

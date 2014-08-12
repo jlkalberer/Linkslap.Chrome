@@ -2,7 +2,7 @@
 	var controller = function($scope, $routeParams, rest, $analytics) {
 		var xhr = null;
 		$scope.subscriptionId = $routeParams.subscriptionId;
-		$scope.search = '';
+		$scope.search = $routeParams.query || '';
 		$scope.pageCount = [];
 		$scope.currentPage = 1;
 		$scope.limit = 20;

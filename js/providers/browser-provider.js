@@ -1,7 +1,8 @@
 angular
 	.module("linkslap")
 	.provider('Browser',function () {
-		var openTab, 
+		var openTab,
+			closeTab, 
 			$q,
 			openTabPage, 
 			ports = [],
@@ -71,8 +72,6 @@ angular
 				if (link.useCurrentWindow) {
 					$windows.getLastFocused({}, function (window) {
 						$tabs.create({"windowId" : window.id, "url" : link.url }, function (tab) {
-							resizeWindow();
-
 							setupTab(link, tab);
 						});
 					});
@@ -90,6 +89,12 @@ angular
 						setupTab(link, tab);
 					});
 				}
+			};
+			
+			closeTab = function () {
+				chrome.tabs.getSelected(function(tab) {
+				    chrome.tabs.remove(tab.id, function() { });
+				});
 			};
 
 			openTabPage = function(url) {
@@ -260,6 +265,7 @@ angular
 
 			return { 
 				openTab: openTab,
+				closeTab: closeTab,
 				openTabPage: openTabPage,
 				toast: function (type, message) {
 					$trigger("browser.sendtoast", {type: type, message: message});

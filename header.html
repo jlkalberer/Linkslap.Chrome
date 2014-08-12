@@ -24,9 +24,11 @@
 					<label>Slapped at <em>{{link.createdDate}}</em> by <span id="by">{{link.userName}}</span> to <a href="{{link.url}}" target="_blank">{{link.streamName}}</a></label>
 				</li>
 			</ul>
+			<button data-ng-if="link.isPreview" data-ng-click="share()" class="pull-right btn btn-linkslap btn-lg">Share This</button>
 		</header>
 
 		<script type="text/javascript" src="js/vendor/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="js/vendor/jquery-deparam.min.js"></script>
 		<script type="text/javascript" src="js/vendor/moment-with-langs.min.js"></script>
 		<script type="text/javascript" src="js/vendor/toastr.min.js"></script>
 

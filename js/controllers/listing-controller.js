@@ -13,9 +13,6 @@
 		browser.$on('subscriptions.synclinks', function (values) {
 			$scope.subscriptionNotifications = values;
 		});
-		$scope.openStream = function (subscription) {
-			browser.openTabPage(settings.baseUrl + 's/' + subscription.stream.key)
-		};
 
 		$scope.openMissedLinks = function (subscriptionNotification) {
 			browser.openTab(subscriptionNotification.submittedLinks);

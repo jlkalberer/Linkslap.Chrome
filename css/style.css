@@ -114,6 +114,14 @@ header {
 h4 {
   margin-top: 0;
 }
+h4 a,
+h4 a:hover {
+  color: #333;
+}
 .pagination {
   margin-top:0;
+}
+.share-img-preview {
+  margin:0 auto 10px;
+  min-width: 100%;
 }

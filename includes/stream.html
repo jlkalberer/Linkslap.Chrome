@@ -1,12 +1,13 @@
 <div data-ng-controller="StreamCtrl" class="row">
 	<div class="col-xs-12">
-		<h4>{{streamName}}</h4>
+		<h4><a href="#" data-ng-click="openStream()">{{streamName}}</a></h4>
 		<a href="#/">back</a>
-
+		<br/>
+		<br/>
 		<ul class="list-group">
 			<li class="list-group-item clearfix" data-ng-repeat="link in links">
-				<a href="{{link.url}}" style="word-wrap:break-word;">{{link.comment}}</a>
-				<span class="pull-right">by {{link.userName}} at {{link.createdDate}}
+				<a href="#" data-ng-click="openLink(link)" style="word-wrap:break-word;">{{link.comment}}</a>
+				<span class="pull-right">from {{link.userName}} at {{link.createdDate}}</span>
 			</li>
 		</ul>
 	</div>
