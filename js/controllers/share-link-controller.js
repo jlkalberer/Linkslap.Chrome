@@ -32,18 +32,19 @@
 
 		
 
-		var userName = '';
+		var account = '';
 		browser.$trigger('account.getaccount').then(function(value) {
-			userName = value.userName;
+			account = value;
 		});
 
 		$scope.preview = function ($event) {
 			$event.preventDefault();
 
 			var model = $scope.model;
-			model.userName = userName;
+			model.userName = account.userName;
 			model.createdDate = moment().format(settings.dateFormat);
 			model.streamName = $scope.subscription.stream.name;
+			model.streamKey = $scope.subscription.stream.key;
 			model.useCurrentWindow = true;
 			model.isPreview = true;
 
