@@ -1,20 +1,56 @@
 <div data-ng-controller="SubscriptionSettingsCtrl" class="row">
 	<div class="col-xs-12">
 		<div class="clearfix">
-			<h2 class="title pull-left"><small>settings</small><br/>{{subscription.stream.name}}</h2>
+			<h2 class="title pull-left">Settings</h2>
 			<a class="pull-right" href="#/">back</a>
-		</div>
-		<div class="alert alert-danger" data-ng-if="errorMessage && errorMessage.length">
-			<p data-ng-repeat="error in errorMessage">{{error}}</p>
 		</div>
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<strong>Remove Stream</strong>
-				<button data-ng-click="removeSubscription()" class="btn btn-xs btn-linkslap pull-right">Remove</button>
+				<label>
+			      <input type="checkbox" data-ng-model="model.disablePopups" data-ng-disabled="model.ignoreAll"> Disable all popups
+			    </label>
 			</div>
 			<div class="panel-body">
-				This will remove the stream from all devices and you will no longer be notified of new links from this stream
+				Disable popups from all streams.  If you check this the popups will still be shown as missed links.
 			</div>
 		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<label>
+			      <input type="checkbox" data-ng-model="model.ignoreAll"> Ignore all streams
+			    </label>
+			</div>
+			<div class="panel-body">
+				Disable popups and missed links from all streams. Viewing the stream listing will still show the links.
+			</div>
+		</div>
+		<h4>Streams</h4>
+		<ul class="list-group">
+			<li class="list-group-item row settings-item">
+				<div class="col-xs-2">
+					<small>Popups</small>
+				</div>
+				<div class="col-xs-2">
+					<small>Ignore</small>
+				</div>
+				<div class="col-xs-5"><small>Stream</small></div>
+				<div class="col-xs-3 text-right">
+					<small>Remove</small>
+				</div>
+			</li>
+			<li class="list-group-item row settings-item" data-ng-repeat="setting in model.subscriptionSettings">
+				<div class="col-xs-2">
+					<input title="Show popups from stream" type="checkbox" data-ng-model="setting.popups" data-ng-disabled="model.disablePopups || model.ignoreAll || setting.ignore">
+				</div>
+				<div class="col-xs-2">
+					<input title="Ignore stream" type="checkbox" data-ng-model="setting.ignore" data-ng-disabled="model.ignoreAll">
+				</div>
+				<div class="col-xs-6" title="{{setting.streamName}}">{{setting.streamName}}</div>
+				<div class="col-xs-2 text-right">
+					<a href="#/remove-subscription/{{setting.subscriptionId}}" class="btn btn-xs btn-linkslap" title="Remove stream"><i class="glyphicon glyphicon-remove" /></a>
+				</div>
+			</li>
+		</ul>
+		<a class="pull-right" href="#/">back</a>
 	</form>
 </div>

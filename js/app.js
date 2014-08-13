@@ -24,8 +24,14 @@
 			.when('/stream/:streamKey', {
 				'templateUrl' : 'includes/stream.html'
 			})
+			.when('/missed-listing/:streamKey', {
+				'templateUrl' : 'includes/missed-listing.html'
+			})
 			.when('/settings', {
 				'templateUrl' : 'includes/subscription-settings.html'
+			})
+			.when('/remove-subscription/:subscriptionId', {
+				'templateUrl' : 'includes/remove-subscription.html'
 			})
 			.when('/', {
 				'templateUrl' : 'includes/listing.html'

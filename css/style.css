@@ -100,6 +100,10 @@ header {
   .gif-row div:nth-child(2) {
     padding-left:7px;
   }
+.no-gutter {
+  margin-left:0;
+  margin-right: 0;
+}
 .loader {
   top:0;
   position: absolute;
@@ -124,4 +128,10 @@ h4 a:hover {
 .share-img-preview {
   margin:0 auto 10px;
   min-width: 100%;
+}
+.settings-item {
+  padding-left:0;
+  padding-right: 0;
+  margin-left: 0;
+  margin-right: 0;
 }

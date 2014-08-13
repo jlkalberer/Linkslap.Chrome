@@ -187,10 +187,31 @@ angular.module('linkslap')
 	    	return storage[acct.id].linkNotifications || [];
 	    });
 
-	    browser.$on('subscriptions.removelinknotification', function (streamKey) {
+	    browser.$on('subscriptions.removelinksnotification', function (streamKey) {
 	    	var acct = account.getAccount();
 	    	var storedNotifications = storage[acct.id].linkNotifications;
-	    	storage[acct.id].linkNotifications = storedNotifications = _.without(storedNotifications, _.findWhere(storedNotifications, {streamKey: streamKey}));
+	    	storage[acct.id].linkNotifications = storedNotifications = _.without(storedNotifications, _.find(storedNotifications, {streamKey: streamKey}));
+		    
+		    browser.$trigger('subscriptions.synclinks', storedNotifications);
+
+		    setCount(storedNotifications);
+
+		    return storedNotifications;
+	    });
+
+	    browser.$on('subscriptions.removelinknotification', function (link) {
+	    	var acct = account.getAccount();
+	    	var storedNotifications = storage[acct.id].linkNotifications;
+
+	    	var subscription = _.find(storedNotifications, {streamKey: link.streamKey});
+
+	    	subscription.submittedLinks = _.without(subscription.submittedLinks, _.find(subscription.submittedLinks, {id : link.id}));
+
+	    	if (!subscription.submittedLinks.length) {
+	    		storedNotifications = _.without(storedNotifications, subscription);
+	    	}
+
+	    	storage[acct.id].linkNotifications = storedNotifications;
 		    
 		    browser.$trigger('subscriptions.synclinks', storedNotifications);
 
@@ -202,6 +223,43 @@ angular.module('linkslap')
 	    browser.$on('subscriptions.newstream', Links.newStream);
 	    browser.$on('subscriptions.subscribe', Links.subscribe);
 	    browser.$on('subscriptions.unsubscribe', Links.unsubscribe);
+
+	    browser.$on('settings.get', function () {
+	    	var acct = account.getAccount();
+    		if (!acct) {
+    			return;
+    		}
+
+        	var settings = storage[acct.id].settings || {
+										        			disablePopups: false,
+										        			ignoreAll: false,
+										        			subscriptionSettings: []
+									        			};
+        	var subs = Links.subscriptions;
+
+        	var toAdd = _.filter(Links.subscriptions, function (subscripton) {
+        		return !_.some(settings.subscriptionSettings, {subscriptionId: subscripton.id});
+        	});
+
+	    	var toRemove = _.filter(settings.subscriptionSettings, function (setting) {
+        		return !_.some(Links.subscriptions, {id: setting.subscriptionId});
+        	});
+
+			settings.subscriptionSettings = _.xor(settings.subscriptionSettings, toRemove);
+			
+			_.forEach(toAdd, function (subscription) {
+				settings.subscriptionSettings.push({
+					subscriptionId : subscription.id,
+					streamName : subscription.stream.name,
+					popups : true,
+					ignore: false
+				});
+			});
+
+			storage[acct.id].settings = settings;
+
+			return settings;
+	    });
 
 	    var userId = null;
 	    $rootScope.$on('account.loggedin', function (event, result) {

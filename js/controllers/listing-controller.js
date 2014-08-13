@@ -20,7 +20,7 @@
 		};
 
 		$scope.dismissMissedLinks = function (subscriptionNotification) {
-			browser.$trigger('subscriptions.removelinknotification', subscriptionNotification.streamKey);
+			browser.$trigger('subscriptions.removelinksnotification', subscriptionNotification.streamKey);
 		};
 	};
 

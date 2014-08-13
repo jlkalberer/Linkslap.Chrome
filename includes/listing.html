@@ -5,7 +5,8 @@
 			<li class="list-group-item clearfix" data-ng-repeat="subscriptionNotification in subscriptionNotifications">
 				<div class="pull-right btn-group">
 	    			<button data-ng-click="openMissedLinks(subscriptionNotification)" class="btn btn-sm btn-primary"><span class="badge">{{subscriptionNotification.submittedLinks.length}}</span> View</button>
-	    			<button data-ng-click="dismissMissedLinks(subscriptionNotification)"  type="button" class="btn btn-sm btn-primary">Dismiss</button>
+					<a href="#/missed-listing/{{subscriptionNotification.streamKey}}" class="btn btn-sm btn-primary" title="View missed links list"><i class="glyphicon glyphicon-list" /></a>
+	    			<button data-ng-click="dismissMissedLinks(subscriptionNotification)"  type="button" title="Dismiss links" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-remove" /></button>
 	    		</div>
     			<span class="list-group-item-heading">{{subscriptionNotification.streamName}}</span>
 			</li>
@@ -19,9 +20,7 @@
 					{{subscription.stream.name}}
 				</a>
 				<a href="#/find-gif/{{subscription.id}}" class="btn btn-linkslap" title="Find gif on GifMe"><i class="glyphicon glyphicon-search" /></a>
-				<a href="#/stream/{{subscription.stream.key}}?streamName={{subscription.stream.name}}" class="btn btn-linkslap" title="View stream"><i class="glyphicon glyphicon-list" /></a>
-				<!--<button data-ng-click="openStream(subscription)" class="btn btn-linkslap" title="View stream"><i class="glyphicon glyphicon-list" /></button>
-				<a href="#/settings/{{subscription.id}}" class="btn btn-linkslap" title="Edit stream"><i class="glyphicon glyphicon-cog" /></a>-->
+				<a href="#/stream/{{subscription.stream.key}}?streamName={{subscription.stream.name | escape}}" class="btn btn-linkslap" title="View stream"><i class="glyphicon glyphicon-list" /></a>
 			</li>
 		</ul>
 	</div>

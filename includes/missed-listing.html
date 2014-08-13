@@ -1,0 +1,23 @@
+<div data-ng-controller="MissedListingCtrl" class="row">
+	<div class="col-xs-12">
+		<h4>
+			<small>missed links</small><br/>
+			<a href="#" data-ng-click="openStream()">{{streamName}}</a>
+		</h4>
+		<a href="#/">back</a>
+		<br/>
+		<br/>
+		<ul class="list-group">
+			<li class="list-group-item clearfix" data-ng-repeat="link in links">
+				<div class="clearfix">
+					<a href="#" data-ng-click="openLink(link)" style="word-wrap:break-word;">{{link.comment}}</a>
+					<div class="btn-group pull-right">
+						<button type="button" data-ng-click="openLink(link)" class="btn btn-xs btn-linkslap">View</button>
+						<button type="button" data-ng-click="removeLink(link)" class="btn btn-xs btn-linkslap"><i class="glyphicon glyphicon-remove"/></button>
+					</div>
+				</div>
+				<span class="pull-right">from {{link.userName}} at {{link.createdDate}}</span>
+			</li>
+		</ul>
+	</div>
+</div>
