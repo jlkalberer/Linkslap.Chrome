@@ -7,7 +7,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<label>
-			      <input type="checkbox" data-ng-model="model.disablePopups" data-ng-disabled="model.ignoreAll"> Disable all popups
+			      <input type="checkbox" data-ng-model="model.disablePopups" data-ng-disabled="model.ignoreAll" data-ng-change="changed()"> Disable all popups
 			    </label>
 			</div>
 			<div class="panel-body">
@@ -17,7 +17,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<label>
-			      <input type="checkbox" data-ng-model="model.ignoreAll"> Ignore all streams
+			      <input type="checkbox" data-ng-model="model.ignoreAll" data-ng-change="changed()"> Ignore all streams
 			    </label>
 			</div>
 			<div class="panel-body">
@@ -40,10 +40,10 @@
 			</li>
 			<li class="list-group-item row settings-item" data-ng-repeat="setting in model.subscriptionSettings">
 				<div class="col-xs-2">
-					<input title="Show popups from stream" type="checkbox" data-ng-model="setting.popups" data-ng-disabled="model.disablePopups || model.ignoreAll || setting.ignore">
+					<input title="Show popups from stream" type="checkbox" data-ng-model="setting.popups" data-ng-change="changed()" data-ng-disabled="model.disablePopups || model.ignoreAll || setting.ignore">
 				</div>
 				<div class="col-xs-2">
-					<input title="Ignore stream" type="checkbox" data-ng-model="setting.ignore" data-ng-disabled="model.ignoreAll">
+					<input title="Ignore stream" type="checkbox" data-ng-model="setting.ignore" data-ng-change="changed()" data-ng-disabled="model.ignoreAll">
 				</div>
 				<div class="col-xs-6" title="{{setting.streamName}}">{{setting.streamName}}</div>
 				<div class="col-xs-2 text-right">

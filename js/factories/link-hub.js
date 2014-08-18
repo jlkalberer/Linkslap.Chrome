@@ -24,8 +24,16 @@ angular.module('linkslap')
 		        	}
 
 		        	// TODO - add to notifications if the browser is idle
+		        	var settings = storage[acct.id].settings;
+		        	var subscriptionSetting = _.find(settings.subscriptionSettings, {streamKey: link.streamKey });
 
-		        	browser.openTab(link);
+		        	if (settings.disablePopups || !subscriptionSetting.popups) {
+		        		// add to queue
+		        	} else if (settings.ignoreAll || subscriptionSetting.ignore) {
+		        		// do nothing
+		        	} else {
+			        	browser.openTab(link);
+		        	}
 		        }
 		    }, 
 	        //Server method stubs for ease of access
@@ -260,6 +268,15 @@ angular.module('linkslap')
 
 			return settings;
 	    });
+
+		browser.$on('settings.save', function (updated) {
+			var acct = account.getAccount();
+    		if (!acct) {
+    			return;
+    		}
+
+    		storage[acct.id].settings = updated;
+		});
 
 	    var userId = null;
 	    $rootScope.$on('account.loggedin', function (event, result) {

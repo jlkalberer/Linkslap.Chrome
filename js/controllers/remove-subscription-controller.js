@@ -2,7 +2,7 @@
 	var controller = function($scope, $routeParams, $location, browser) {
 		$scope.disableButton = false;
 		browser.$trigger('subscriptions.get').then(function (values) {
-			$scope.subscription = _.where(values, {id: parseInt($routeParams.subscriptionId)})[0];
+			$scope.subscription = _.find(values, {id: parseInt($routeParams.subscriptionId)});
 		});
 		
 		$scope.removeSubscription = function () {
