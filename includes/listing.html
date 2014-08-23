@@ -15,19 +15,21 @@
 	<div class="col-xs-12">
 		<h4>Streams</h4>
 		<ul class="list-group">
-			<li class="btn-group listing-group" data-ng-repeat="subscription in subscriptions">
+			<li class="subscription btn-group listing-group" data-ng-repeat="subscription in subscriptions">
 				<a href="#/share-link/{{subscription.id}}"  class="share-button btn btn-linkslap" title="Share to {{subscription.stream.name}}">
-					{{subscription.stream.name}}
+					<span class="pull-left">{{subscription.stream.name}}</span>
+					<i class="glyphicon glyphicon-share pull-right" />
 				</a>
-				<a href="#/find-gif/{{subscription.id}}" class="btn btn-linkslap" title="Find gif on GifMe"><i class="glyphicon glyphicon-search" /></a>
+				<a href="#/find-gif/{{subscription.id}}" class="btn btn-linkslap" title="Share gif"><i class="glyphicon glyphicon-flash" /></a>
 				<a href="#/stream/{{subscription.stream.key}}?streamName={{subscription.stream.name | escape}}" class="btn btn-linkslap" title="View stream"><i class="glyphicon glyphicon-list" /></a>
+				<a href="#/share-stream/{{subscription.id}}" class="btn btn-linkslap" title="Share stream"><i class="glyphicon glyphicon-user-add" /></a>
 			</li>
 		</ul>
 	</div>
 	<div class="col-xs-12 text-right">
 		<div class="btn-group">
 			<a href="#/new-stream" class="btn btn-linkslap">New Stream</a>
-			<a href="#/settings" class="btn btn-linkslap" title="Settings"><i class="glyphicon glyphicon-cog" /></a>
+			<a href="#/settings" class="btn btn-linkslap" title="Settings"><i class="glyphicon glyphicon-cogwheel" /></a>
 		</div>
 	</div>
 </div>

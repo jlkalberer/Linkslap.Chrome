@@ -1,0 +1,20 @@
+<div data-ng-controller="ShareStreamCtrl" class="row">
+	<form class="col-xs-12" data-ng-submit="submitForm()">
+		<h2 class="title"><small>Share Stream</small><br/>{{subscription.stream.name}}</h2>
+		<div class="alert alert-danger" data-ng-if="errorMessage && errorMessage.length">
+			<p data-ng-repeat="error in errorMessage">{{error}}</p>
+		</div>
+		<div class="form-group">
+			<label for="linkText" class="control-label">To Email Address</label>
+			<input type="email" data-focus="true" class="form-control" id="linkText" placeholder="Enter an email address" data-ng-model="model.email" />
+		</div>
+		<div class="form-group">
+			<label for="linkText" class="control-label">Message</label>
+			<textarea data-focus="true" class="form-control" id="linkText" placeholder="Enter personal message" data-ng-model="model.message" rows="4"></textarea>
+		</div>
+		<div class="form-group">
+			<a href="{{cancelUrl || '#/'}}">Cancel</a>
+			<button class="btn btn-lg btn-linkslap pull-right" type="submit" data-ng-disabled="disableButton || !model.email || !model.message">Share Stream</button>
+		</div>
+	</form>
+</div>

@@ -27,8 +27,25 @@ angular.module('linkslap')
 		        	var settings = storage[acct.id].settings;
 		        	var subscriptionSetting = _.find(settings.subscriptionSettings, {streamKey: link.streamKey });
 
-		        	if (settings.disablePopups || !subscriptionSetting.popups) {
+		        	if (settings.disablePopups || (subscriptionSetting && !subscriptionSetting.popups)) {
 		        		// add to queue
+		        		var storedNotifications = storage[acct.id].linkNotifications || [];
+		        		var existing = _(storedNotifications).findWhere({streamKey: link.streamKey})
+
+		    			if (!existing) {
+		    				existing = {
+		    					streamName: link.streamName,
+		    					streamKey : link.streamKey,
+		    					lastUpdated : link.createdDate,
+		    					submittedLinks : []
+		    				};
+
+		    				storedNotifications.push(existing);
+		    			}
+
+		    			existing.submittedLinks.push(link);
+		    			storage[acct.id].linkNotifications = storedNotifications;
+		    			setCount(storedNotifications);
 		        	} else if (settings.ignoreAll || subscriptionSetting.ignore) {
 		        		// do nothing
 		        	} else {
@@ -259,6 +276,7 @@ angular.module('linkslap')
 				settings.subscriptionSettings.push({
 					subscriptionId : subscription.id,
 					streamName : subscription.stream.name,
+					streamKey :subscription.stream.key,
 					popups : true,
 					ignore: false
 				});

@@ -24,6 +24,9 @@
 			.when('/stream/:streamKey', {
 				'templateUrl' : 'includes/stream.html'
 			})
+			.when('/share-stream/:subscriptionId', {
+				'templateUrl' : 'includes/share-stream.html'
+			})
 			.when('/missed-listing/:streamKey', {
 				'templateUrl' : 'includes/missed-listing.html'
 			})
