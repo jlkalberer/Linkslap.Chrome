@@ -9,6 +9,7 @@
 
 			authorization.then(function () {
 				// Go to listing view - successfully authenticated
+				// account.onboarded(true);
 				$location.path("/");
 			}, function (response) {
 				$scope.disableButton = false;

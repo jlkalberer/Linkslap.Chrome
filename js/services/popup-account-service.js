@@ -1,7 +1,7 @@
 (function() {
 	var app = angular.module("linkslap");
 
-	app.factory('AccountService', [ 'Browser', 'Restangular', function (browser, rest) {
+	app.factory('AccountService', [ 'Browser', 'Restangular', '$localStorage', function (browser, rest, storage) {
 		var account = null,
 			output = {
 				login: function (credentials) {
@@ -32,7 +32,22 @@
 				// This is used in the main app.js in order to go to the auth screen if the user hasn't logged in
 				accountLoaded: browser.$trigger('account.getaccount').then(function (value) {
 					return account = value;
-				})
+				}),
+				onboarded: function (val) {
+					if (val) {
+						if (account && storage[account.id]) {
+							storage[account.id].onboarded = true
+						}
+					
+						storage.onboarded = true
+					}
+
+					if (account && storage[account.id]) {
+						return storage[account.id].onboarded;
+					}
+
+					return storage.onboarded;
+				}
 			};
 
 

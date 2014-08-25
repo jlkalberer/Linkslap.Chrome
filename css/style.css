@@ -1,5 +1,6 @@
 html, body {
   overflow: hidden;
+  font-family: 'Varela', sans-serif;
 }
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 header {
@@ -25,12 +26,16 @@ header {
   color: #FFFFFF !important;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
   background-color: #00869F;
+  border-color: #ffffff; /* rgba(0, 0, 0, 0.15); */
+}
+header .btn-linkslap {
   border-color: rgba(0, 0, 0, 0.15);
 }
 .btn:focus {
   outline: 0;
 }
 
+.btn-linkslap.hover,
 .btn-linkslap:hover,
 .btn-linkslap:active,
 .btn-linkslap.active {
@@ -45,6 +50,87 @@ header {
   filter: alpha(opacity=100);
   background-color: #0B5866;
 }
+.onboarding h1, .onboarding h2, .onboarding h3 {
+  color:#73242c;
+  text-transform: uppercase;
+}
+.onboarding h1 {
+  font-size: 22px;
+  margin-bottom:5px;
+}
+.onboarding h2 {
+  margin:0;
+  font-size: 16px;
+  display: inline-block;
+  margin-left: 5px;
+}
+.onboarding h3 {
+  margin:0;
+  font-size: 13px;
+  display: inline-block;
+}
+.onboarding ul {
+  list-style: none;
+  margin:0;
+  padding-left:30px;
+}
+.onboarding li {
+  padding-bottom: 20px;
+}
+.onboarding li > span {
+  margin-left: -30px;
+  display: inline-block;
+  width:20px;
+  height: 20px;
+  line-height: 18px;
+  text-align: center;;
+  color:#73242c;
+  background:#f6c500;
+  border:solid 1px #73242c;
+  border-radius: 10px;
+  vertical-align: top;
+}
+.onboarding p {
+  color:#4b91af;
+}
+.onboarding hr {
+  border-color:#abd3de;
+}
+.onboarding .left-this {
+  width:50px;
+  position: relative;
+}
+.onboarding .right-this {
+  width:50px;
+  position: relative;
+}
+.onboarding li:nth-child(2) .left-this {
+  left: 50px;
+  margin:5px 0 -10px;
+}
+.onboarding li:nth-child(3) .right-this {
+  left: 240px;
+  margin-bottom:-20px;
+}
+.onboarding li:nth-child(4) .right-this {
+  left: 50px;
+  margin-bottom:-20px;
+}
+.onboarding li:nth-child(5) .left-this {
+  left: 215px;
+  margin-bottom: -20px;
+}
+.onboarding li:nth-child(6) .right-this {
+  left: 203px;
+  margin-bottom: -20px;
+}
+#onboardingLogo {
+  width:70%;
+  display: block;
+  margin:0 auto;
+  padding-bottom: 15px;
+}
+
 .title {
   margin-top:0;
   color: rgb(50,50,50);

@@ -1,8 +1,11 @@
 (function() {
-	var app = angular.module("linkslap", [ 'ngRoute', 'restangular', 'angulartics', 'angulartics.google.analytics', 'ui.bootstrap' ]);
+	var app = angular.module("linkslap", [ 'ngRoute', 'ngStorage', 'restangular', 'angulartics', 'angulartics.google.analytics', 'ui.bootstrap' ]);
 	
 	app.config(function ($routeProvider) {
 		$routeProvider
+			.when('/onboard', {
+				'templateUrl' : 'includes/onboard.html'
+			})
 			.when('/authenticate', {
 				'templateUrl' : 'includes/authenticate.html'
 			})
@@ -50,16 +53,21 @@
 		.config(['RestangularProvider', 'SettingsProvider', function (rest, settings) {
 			rest.setBaseUrl(settings.baseUrl);
 		}])
-		.run(['$rootScope', 'AccountService', '$location', function(root, auth, $location) {
+		.run(['$rootScope', 'AccountService', '$location', 'Browser', function(root, auth, $location, storage) {
 			auth.accountLoaded.then(function (value) {
 				root.$on( "$routeChangeStart", function(event, next, current) {
 					var path = next.$$route.originalPath;
-					if (!auth.isAuthenticated() && path !== '/register' && path !== '/forgot-password') {
+
+					if (!auth.onboarded()) {
+						$location.path('/onboard');
+					} else if (!auth.isAuthenticated() && path !== '/register' && path !== '/forgot-password' && path !== "/onboard") {
 						$location.path('/authenticate');
 					}
 				});
 
-				if (!value) {
+				if (!auth.onboarded()) {
+					$location.path('/onboard');
+				} else if (!value) {
 					$location.path('/authenticate');
 				}
 			});
