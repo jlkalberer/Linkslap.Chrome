@@ -10,11 +10,14 @@
 	<body ng-controller="MainCtrl as main">
 
 		<header class="col-xs-12">
-			<img src="img/logo.png" />
-			<img id="logoText" src="img/logo-text.png" />
-			<div data-ng-if="isAuthenticated()" class="pull-right text-right">
-				<strong>Welcome {{account.userName}}</strong><br/>
-				<button data-ng-click="logOut()" class="btn btn-xs btn-linkslap">Log out</button>
+			<div class="pull-left">
+				<img src="img/logo.png" />
+				<img id="logoText" src="img/logo-text.png" />
+			</div>
+			<div class="pull-right text-right">
+				<div data-ng-if="isAuthenticated()"><strong>Welcome {{account.userName}}</strong></div>
+				<button data-ng-if="isAuthenticated()" data-ng-click="logOut()" class="btn btn-xs btn-linkslap">Log out</button>
+				<a href="#/onboard" class="btn btn-xs btn-linkslap" title="How to use LinkSlap"><i class="glyphicon glyphicon-circle-question-mark"></i></a>
 			</div>
 		</header>
 		<div id="linkslap">
