@@ -7,12 +7,12 @@
 					var authorization = rest.one('token').withHttpConfig({transformRequest: angular.identity});
 					
 					return authorization
-						.customPOST(decodeURIComponent($.param({
+						.customPOST(decodeURIComponent(encodeURIComponent($.param({
 								'grant_type':'password',
 								'username': credentials.userName,
 								'password': credentials.password,
 								'platform': 'chrome'
-							})), '', {}, { 
+							}))), '', {}, { 
 								'Content-Type' : 'application/x-www-form-urlencoded'
 							})
 						.then(function (response) {
