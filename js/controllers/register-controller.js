@@ -11,7 +11,11 @@
 			registration.then(function () {
 				browser.toast('success', 'You have successfully registered.  You will receive a confirmation email shortly.');
 
-				$location.path('/authenticate');
+				account.login($scope.model).then(function() {
+					$location.path('/');
+				}, function () {
+					$location.path('/authenticate');
+				})
 			}, function (response) {
 				$scope.disableButton = false;
 				var output = response.data;
