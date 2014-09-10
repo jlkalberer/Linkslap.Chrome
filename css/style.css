@@ -16,7 +16,7 @@ header {
   width:418px;
   padding:15px;
   background: url('../img/background.png');
-  max-height: 500px;
+  max-height: 520px;
   overflow-y:auto;
 }
 .dark-grey {
@@ -185,6 +185,14 @@ h4 a:hover {
 .share-img-preview {
   margin:0 auto 10px;
   min-width: 100%;
+  padding-bottom:180px;
+}
+.share-form-absolute {
+  position:absolute;
+  bottom:0;
+  width: calc(100% - 15px); 
+  padding:0 15px 15px;
+  background: url('../img/background.png') 0 -6px;
 }
 .settings-item {
   padding-left:0;
