@@ -3,7 +3,7 @@
 
 	"name": "Linkslap",
 	"description": "Instantly share pics or pages with your friends!",
-	"version": "0.3.25",
+	"version": "0.3.26",
 
 	"browser_action": {
 		"default_icon": {

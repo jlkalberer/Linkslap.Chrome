@@ -22,6 +22,9 @@ html {
 	text-indent: 100%;
 	float: left;
 }
+.navbar-nav {
+  width: calc(100% - 90px);
+}
 h2 {
 	margin:0;
 }
