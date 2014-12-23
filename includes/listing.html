@@ -5,8 +5,8 @@
 			<li class="list-group-item clearfix" data-ng-repeat="subscriptionNotification in subscriptionNotifications">
 				<div class="pull-right btn-group">
 	    			<button data-ng-click="openMissedLinks(subscriptionNotification)" class="btn btn-sm btn-primary"><span class="badge">{{subscriptionNotification.submittedLinks.length}}</span> View</button>
-					<a href="#/missed-listing/{{subscriptionNotification.streamKey}}" class="btn btn-sm btn-primary" title="View missed links list"><i class="glyphicon glyphicon-list" /></a>
-	    			<button data-ng-click="dismissMissedLinks(subscriptionNotification)"  type="button" title="Dismiss links" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-remove" /></button>
+					<a href="#/missed-listing/{{subscriptionNotification.streamKey}}" class="btn btn-sm btn-primary" title="View missed links list"><i class="glyphicon glyphicon-list"></i></a>
+	    			<button data-ng-click="dismissMissedLinks(subscriptionNotification)"  type="button" title="Dismiss links" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-remove"></i></button>
 	    		</div>
     			<span class="list-group-item-heading">{{subscriptionNotification.streamName}}</span>
 			</li>
@@ -18,18 +18,18 @@
 			<li class="subscription btn-group listing-group" data-ng-repeat="subscription in subscriptions">
 				<a href="#/share-link/{{subscription.id}}"  class="share-button btn btn-linkslap" title="Share to {{subscription.stream.name}}">
 					<span class="pull-left">{{subscription.stream.name}}</span>
-					<i class="glyphicon glyphicon-share pull-right" />
+					<i class="glyphicon glyphicon-share pull-right"></i>
 				</a>
-				<a href="#/find-gif/{{subscription.id}}" class="btn btn-linkslap" title="Share gif"><i class="glyphicon glyphicon-flash" /></a>
-				<a href="#/stream/{{subscription.stream.key}}?streamName={{subscription.stream.name | escape}}" class="btn btn-linkslap" title="View stream"><i class="glyphicon glyphicon-list" /></a>
-				<a href="#/share-stream/{{subscription.id}}" class="btn btn-linkslap" title="Share stream"><i class="glyphicon glyphicon-user-add" /></a>
+				<a href="#/find-gif/{{subscription.id}}" class="btn btn-linkslap btn-gif" title="Share gif"><i class="glyphicon glyphicon-flash"></i></a>
+				<a href="#/stream/{{subscription.stream.key}}?streamName={{subscription.stream.name | escape}}" class="btn btn-linkslap" title="View stream"><i class="glyphicon glyphicon-list"></i></a>
+				<a href="#/share-stream/{{subscription.id}}" class="btn btn-linkslap" title="Share stream"><i class="glyphicon glyphicon-user-add"></i></a>
 			</li>
 		</ul>
 	</div>
 	<div class="col-xs-12 text-right">
 		<div class="btn-group">
 			<a href="#/new-stream" class="btn btn-linkslap">New Stream</a>
-			<a href="#/settings" class="btn btn-linkslap" title="Settings"><i class="glyphicon glyphicon-cogwheel" /></a>
+			<a href="#/settings" class="btn btn-linkslap" title="Settings"><i class="glyphicon glyphicon-cogwheel"></i></a>
 		</div>
 	</div>
 </div>

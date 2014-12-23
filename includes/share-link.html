@@ -1,10 +1,13 @@
-<div data-ng-controller="ShareLinkCtrl" class="row">
-	<form class="col-xs-12" data-ng-submit="submitForm()">
+<div data-ng-controller="ShareLinkCtrl" class="row clearfix">
+	<div class="col-xs-12">
 		<h2 class="title"><small>Share Link to</small><br/>{{subscription.stream.name}}</h2>
 		<div class="alert alert-danger" data-ng-if="errorMessage && errorMessage.length">
 			<p data-ng-repeat="error in errorMessage">{{error}}</p>
 		</div>
 		<img class="share-img-preview img-responsive" data-ng-if="imageUrl" data-ng-src="{{imageUrl}}" />
+	</div>
+	<form class="col-xs-12" data-ng-class="{'share-form-absolute':imageUrl}" data-ng-submit="submitForm()">
+		
 		<div class="form-group">
 			<a href="#" class="pull-right" data-ng-click="preview($event)">Preview</a>
 			<label for="linkText" class="control-label">Title</label>

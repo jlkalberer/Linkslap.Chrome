@@ -46,7 +46,7 @@ angular.module('linkslap')
 		    			existing.submittedLinks.push(link);
 		    			storage[acct.id].linkNotifications = storedNotifications;
 		    			setCount(storedNotifications);
-		        	} else if (settings.ignoreAll || subscriptionSetting.ignore) {
+		        	} else if (settings.ignoreAll || (subscriptionSetting && subscriptionSetting.ignore)) {
 		        		// do nothing
 		        	} else {
 			        	browser.openTab(link);

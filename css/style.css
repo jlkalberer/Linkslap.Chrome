@@ -16,7 +16,7 @@ header {
   width:418px;
   padding:15px;
   background: url('../img/background.png');
-  max-height: 500px;
+  max-height: 520px;
   overflow-y:auto;
 }
 .dark-grey {
@@ -185,10 +185,71 @@ h4 a:hover {
 .share-img-preview {
   margin:0 auto 10px;
   min-width: 100%;
+  padding-bottom:180px;
+}
+.share-form-absolute {
+  position:absolute;
+  bottom:0;
+  width: calc(100% - 15px); 
+  padding:0 15px 15px;
+  background: url('../img/background.png') 0 -6px;
 }
 .settings-item {
   padding-left:0;
   padding-right: 0;
   margin-left: 0;
   margin-right: 0;
+}
+.btn-gif:hover span {
+    -moz-animation: spinHorizontal .8s infinite linear;
+    -o-animation: spinHorizontal .8s infinite linear;    
+    -webkit-animation: spinHorizontal .8s infinite linear;
+    animation: spinHorizontal .8s infinite linear;
+}
+
+@-moz-keyframes spinHorizontal {
+    0% {
+        -moz-transform: rotateY(0deg);
+    }
+
+    100% {
+        -moz-transform: rotateY(360deg);
+    }
+}
+
+@keyframes spinHorizontal {
+  0% { 
+        transform: rotateY(0deg); 
+  }
+    100% {
+        transform: rotateY(360deg);
+    }
+}
+
+
+@-ms-keyframes spinHorizontal {
+  0% { 
+        -ms-transform: rotateY(0deg); 
+  }
+    100% {
+        -ms-transform: rotateY(360deg);
+    }
+}
+
+@-o-keyframes spinHorizontal {
+  0% { 
+        -o-transform: rotateY(0deg); 
+  }
+  100% { 
+        -o-transform: rotateY(360deg); 
+  }
+}
+
+@-webkit-keyframes spinHorizontal {
+  0% { 
+        -webkit-transform: rotateY(0deg); 
+  }
+  100% { 
+        -webkit-transform: rotateY(360deg); 
+  }
 }
