@@ -8,7 +8,7 @@
 			return self;
 		};
 		
-		this.baseUrl = 'https://linkslap.me/'
+		this.baseUrl = 'http://linkslap.me/'
 		//this.baseUrl = 'http://localhost:50328/';
 		this.dateFormat = "YYYY-MM-DDTHH:mm:ss.SSSZ";
 
